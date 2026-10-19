@@ -1,0 +1,20 @@
+{
+ "accent": "#9A3412",
+ "symbol": "WP",
+ "variants": [
+  {
+   "file": "og-de.png",
+   "title": "Heizungsförderung 2026\nZuschuss, Restkosten, Heizkosten",
+   "subtitle": "Antragsdatum × Einkommen × Bundesland · CO₂-Preis · Amortisation",
+   "badge": "2026",
+   "brand": "Heizwechsel"
+  },
+  {
+   "file": "og-en.png",
+   "title": "Germany heating grant 2026\ngrant, net cost, running cost",
+   "subtitle": "Application date × income × state · CO₂ price · payback",
+   "badge": "2026",
+   "brand": "Heizwechsel"
+  }
+ ]
+}

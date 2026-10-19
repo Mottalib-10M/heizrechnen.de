@@ -1,0 +1,299 @@
+[
+ {
+  "id": "waermepumpe-foerderung",
+  "dir": "rechner",
+  "slug_de": "waermepumpe-foerderung",
+  "slug_en": "heat-pump-grant-germany",
+  "group": "foerderung",
+  "kind": "tool:foerderung",
+  "kp": "wärmepumpe förderung"
+ },
+ {
+  "id": "waermepumpe-rechner",
+  "dir": "rechner",
+  "slug_de": "waermepumpe-rechner",
+  "slug_en": "heat-pump-cost-calculator",
+  "group": "kosten",
+  "kind": "tool:heizkosten",
+  "kp": "wärmepumpe rechner"
+ },
+ {
+  "id": "heizkosten-rechner",
+  "dir": "rechner",
+  "slug_de": "heizkosten-rechner",
+  "slug_en": "heating-cost-calculator-germany",
+  "group": "kosten",
+  "kind": "tool:heizkosten",
+  "kp": "heizkosten rechner"
+ },
+ {
+  "id": "waermepumpe-stromverbrauch",
+  "dir": "rechner",
+  "slug_de": "waermepumpe-stromverbrauch",
+  "slug_en": "heat-pump-electricity-use",
+  "group": "kosten",
+  "kind": "tool:wpstrom",
+  "kp": "wärmepumpe stromverbrauch"
+ },
+ {
+  "id": "co2-steuer",
+  "dir": "rechner",
+  "slug_de": "co2-steuer-heizung",
+  "slug_en": "co2-tax-heating-germany",
+  "group": "co2",
+  "kind": "tool:co2",
+  "kp": "co2 steuer"
+ },
+ {
+  "id": "co2-kostenaufteilung",
+  "dir": "rechner",
+  "slug_de": "co2-kosten-vermieter-mieter",
+  "slug_en": "co2-cost-split-landlord-tenant",
+  "group": "co2",
+  "kind": "tool:aufteilung",
+  "kp": "co2 kosten aufteilung"
+ },
+ {
+  "id": "kfw-458",
+  "dir": "guides",
+  "slug_de": "kfw-458",
+  "slug_en": "kfw-458-heating-grant",
+  "group": "foerderung",
+  "kind": "mini:zuschuss",
+  "kp": "kfw 458"
+ },
+ {
+  "id": "einkommensbonus",
+  "dir": "guides",
+  "slug_de": "einkommensbonus",
+  "slug_en": "income-bonus-heating-grant",
+  "group": "foerderung",
+  "kind": "mini:einkommen",
+  "kp": "einkommensbonus"
+ },
+ {
+  "id": "klimageschwindigkeitsbonus",
+  "dir": "guides",
+  "slug_de": "klimageschwindigkeitsbonus",
+  "slug_en": "climate-speed-bonus",
+  "group": "foerderung",
+  "kind": "mini:warten",
+  "kp": "klimageschwindigkeitsbonus"
+ },
+ {
+  "id": "effizienzbonus",
+  "dir": "guides",
+  "slug_de": "effizienzbonus",
+  "slug_en": "efficiency-bonus-heat-pump",
+  "group": "foerderung",
+  "kind": "mini:altneu",
+  "kp": "effizienzbonus"
+ },
+ {
+  "id": "foerderantrag",
+  "dir": "guides",
+  "slug_de": "heizungsfoerderung-antrag",
+  "slug_en": "heating-grant-application",
+  "group": "foerderung",
+  "kind": "mini:fristen",
+  "kp": "heizungsförderung antrag"
+ },
+ {
+  "id": "ergaenzungskredit",
+  "dir": "guides",
+  "slug_de": "ergaenzungskredit-heizung",
+  "slug_en": "top-up-loan-heating",
+  "group": "foerderung",
+  "kind": "mini:kredit",
+  "kp": "kfw ergänzungskredit"
+ },
+ {
+  "id": "steuerbonus-35c",
+  "dir": "guides",
+  "slug_de": "steuerbonus-heizung",
+  "slug_en": "tax-credit-heating-replacement",
+  "group": "foerderung",
+  "kind": "mini:steuer35c",
+  "kp": "steuerbonus heizung"
+ },
+ {
+  "id": "vermieter",
+  "dir": "guides",
+  "slug_de": "heizungsfoerderung-vermieter",
+  "slug_en": "heating-grant-landlords",
+  "group": "foerderung",
+  "kind": "mini:vermieter",
+  "kp": "heizungsförderung vermieter"
+ },
+ {
+  "id": "weg",
+  "dir": "guides",
+  "slug_de": "heizungsfoerderung-weg",
+  "slug_en": "heating-grant-owners-association",
+  "group": "foerderung",
+  "kind": "mini:weg",
+  "kp": "heizungsförderung weg"
+ },
+ {
+  "id": "pelletheizung",
+  "dir": "guides",
+  "slug_de": "pelletheizung-foerderung",
+  "slug_en": "pellet-boiler-grant",
+  "group": "foerderung",
+  "kind": "mini:pellet",
+  "kp": "pelletheizung förderung"
+ },
+ {
+  "id": "heizungsoptimierung",
+  "dir": "guides",
+  "slug_de": "heizungsoptimierung",
+  "slug_en": "heating-optimisation-grant",
+  "group": "foerderung",
+  "kind": "mini:optimierung",
+  "kp": "heizungsoptimierung förderung"
+ },
+ {
+  "id": "waermepumpe-kosten",
+  "dir": "guides",
+  "slug_de": "waermepumpe-kosten",
+  "slug_en": "heat-pump-cost-germany",
+  "group": "kosten",
+  "kind": "mini:wpnetto",
+  "kp": "wärmepumpe kosten"
+ },
+ {
+  "id": "heizungstausch-kosten",
+  "dir": "guides",
+  "slug_de": "heizungstausch-kosten",
+  "slug_en": "replacing-heating-cost",
+  "group": "kosten",
+  "kind": "mini:tausch",
+  "kp": "heizungstausch kosten"
+ },
+ {
+  "id": "waermepumpe-oder-gasheizung",
+  "dir": "guides",
+  "slug_de": "waermepumpe-oder-gasheizung",
+  "slug_en": "heat-pump-or-gas-boiler",
+  "group": "kosten",
+  "kind": "mini:wpgas",
+  "kp": "wärmepumpe oder gasheizung"
+ },
+ {
+  "id": "heizkosten-vergleich",
+  "dir": "guides",
+  "slug_de": "heizkosten-vergleich",
+  "slug_en": "heating-costs-compared",
+  "group": "kosten",
+  "kind": "mini:vergleich",
+  "kp": "heizkosten vergleich"
+ },
+ {
+  "id": "heizkosten-bundesland",
+  "dir": "guides",
+  "slug_de": "heizkosten-bundesland",
+  "slug_en": "heating-costs-by-state",
+  "group": "kosten",
+  "kind": "mini:land",
+  "kp": "heizkosten bundesland"
+ },
+ {
+  "id": "strompreis-waermepumpe",
+  "dir": "guides",
+  "slug_de": "strompreis-waermepumpe",
+  "slug_en": "heat-pump-electricity-price",
+  "group": "kosten",
+  "kind": "mini:strompreis",
+  "kp": "strompreis wärmepumpe"
+ },
+ {
+  "id": "waermepumpentarif",
+  "dir": "guides",
+  "slug_de": "waermepumpentarif",
+  "slug_en": "heat-pump-tariff",
+  "group": "kosten",
+  "kind": "mini:tarif",
+  "kp": "wärmepumpentarif"
+ },
+ {
+  "id": "gaspreis",
+  "dir": "guides",
+  "slug_de": "gaspreis",
+  "slug_en": "gas-price-germany",
+  "group": "kosten",
+  "kind": "mini:gaspreis",
+  "kp": "gaspreis"
+ },
+ {
+  "id": "fernwaerme-preise",
+  "dir": "guides",
+  "slug_de": "fernwaerme-preise",
+  "slug_en": "district-heating-prices",
+  "group": "kosten",
+  "kind": "mini:fernwaerme",
+  "kp": "fernwärme preise"
+ },
+ {
+  "id": "co2-preis-2027",
+  "dir": "guides",
+  "slug_de": "co2-preis-prognose",
+  "slug_en": "co2-price-forecast-germany",
+  "group": "co2",
+  "kind": "mini:co2jahr",
+  "kp": "co2 preis 2027"
+ },
+ {
+  "id": "co2-preis-heizoel",
+  "dir": "guides",
+  "slug_de": "co2-preis-heizoel",
+  "slug_en": "co2-price-heating-oil",
+  "group": "co2",
+  "kind": "mini:co2oel",
+  "kp": "co2 preis heizöl"
+ },
+ {
+  "id": "heizungsgesetz",
+  "dir": "guides",
+  "slug_de": "heizungsgesetz",
+  "slug_en": "heating-law-germany",
+  "group": "gesetz",
+  "kind": "mini:biotreppe",
+  "kp": "heizungsgesetz"
+ },
+ {
+  "id": "gebaeudeenergiegesetz",
+  "dir": "guides",
+  "slug_de": "gebaeudeenergiegesetz",
+  "slug_en": "building-energy-act",
+  "group": "gesetz",
+  "kind": "mini:klasse",
+  "kp": "gebäudeenergiegesetz"
+ },
+ {
+  "id": "gasheizung-verbot",
+  "dir": "guides",
+  "slug_de": "gasheizung-verbot",
+  "slug_en": "gas-boiler-ban-germany",
+  "group": "gesetz",
+  "kind": "mini:gasneu",
+  "kp": "gasheizung verbot"
+ },
+ {
+  "id": "oelheizung-verbot",
+  "dir": "guides",
+  "slug_de": "oelheizung-verbot",
+  "slug_en": "oil-heating-ban-germany",
+  "group": "gesetz",
+  "kind": "mini:oelweiter",
+  "kp": "ölheizung verbot"
+ },
+ {
+  "id": "waermeplanung",
+  "dir": "guides",
+  "slug_de": "kommunale-waermeplanung",
+  "slug_en": "municipal-heat-planning",
+  "group": "gesetz",
+  "kind": "mini:waermeplan",
+  "kp": "kommunale wärmeplanung"
+ }
+]

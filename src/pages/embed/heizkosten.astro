@@ -1,0 +1,26 @@
+---
+/** Einbettbare Seite (iframe): Rechner ohne Navigation. noindex, nicht in der Sitemap (astro.config). ?lang=en schaltet die Sprache um. */
+import '../../styles/global.css';
+import HeizkostenRechner from '../../components/calc/HeizkostenRechner';
+import { SITE_URL } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const de = route('heizkosten-rechner', 'de'), en = route('heizkosten-rechner', 'en');
+---
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Heizkosten im Vergleich</title>
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={`${SITE_URL}${de}`} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="bg-white p-2 text-navy-900">
+    <div id="de-view"><HeizkostenRechner client:load lang="de" /></div>
+    <div id="en-view" hidden><HeizkostenRechner client:load lang="en" /></div>
+    <p class="mt-2 text-center text-xs text-navy-600"><a id="credit" href={`${SITE_URL}${de}`} data-en={`${SITE_URL}${en}`} target="_blank" rel="noopener" class="underline">Heizkosten im Vergleich · Heizwechsel</a></p>
+    <script is:inline>
+      if (new URLSearchParams(location.search).get('lang') === 'en') { document.getElementById('de-view').hidden = true; document.getElementById('en-view').hidden = false; document.documentElement.lang = 'en'; var c = document.getElementById('credit'); c.textContent = 'Heating costs compared · Heizwechsel'; c.href = c.dataset.en; }
+    </script>
+  </body>
+</html>

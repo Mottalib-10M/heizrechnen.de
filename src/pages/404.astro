@@ -1,0 +1,11 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { route } from '../i18n/routes';
+---
+<BaseLayout title="Seite nicht gefunden · Page not found" description="Unter dieser Adresse gibt es keine Seite zur Heizungsförderung. There is no heating page at this address." lang="de" noindex={true}>
+  <div class="mx-auto max-w-3xl px-4 py-16">
+    <h1 class="text-3xl font-bold text-navy-900">Seite nicht gefunden</h1>
+    <p class="mt-4 text-navy-700">Vielleicht ist der Link beim Kopieren abgeschnitten worden. Die meisten kommen hierher, um ihren <a class="underline" href={route('home', 'de')}>Zuschuss für den Heizungstausch</a> zu berechnen, die <a class="underline" href={route('heizkosten-rechner', 'de')}>Heizkosten</a> zu vergleichen oder den <a class="underline" href={route('co2-steuer', 'de')}>CO₂-Preis</a> für ihr Heizöl zu sehen.</p>
+    <p class="mt-6 text-navy-700" lang="en">Nothing lives at this address. Most visitors want their <a class="underline" href={route('home', 'en')}>German heating grant</a>, a <a class="underline" href={route('heizkosten-rechner', 'en')}>running cost comparison</a> or the <a class="underline" href={route('co2-steuer', 'en')}>CO₂ price</a> on their fuel.</p>
+  </div>
+</BaseLayout>

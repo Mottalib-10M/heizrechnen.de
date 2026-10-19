@@ -1,0 +1,20 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { CONTACT_EMAIL, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { contactPageSchema } from '../../lib/seo';
+const lang = 'en';
+const description = 'Write to us if a grant rate or price is out of date, your approval differs from the calculator, a case is missing, or you would like to embed the grant calculator.';
+---
+<PageLayout title={`Contact ${SITE_NAMES[lang]}: report an error, embed a calculator`} description={description} lang={lang} noindex={true} jsonLd={[contactPageSchema({ name: 'Contact', description, path: route('contact', lang), lang })]} breadcrumbs={[{ label: 'Contact' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Contact</h1>
+    <p>Email: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. We usually reply within a week, in English or German.</p>
+    <h2>Your approval differs from the calculator</h2>
+    <p>Send the share link from the calculator and the amounts in your grant approval (Zuwendungsbescheid), without name, address or application number. The gap usually comes from cost items that are not eligible, the application date or the income counted. If the error is ours, we fix it and add the case as a test.</p>
+    <h2>Embedding</h2>
+    <p>Energy advisers, associations, municipalities and newsrooms may embed the calculators free of charge: <a href={route('widget', lang)}>embed a calculator</a>.</p>
+    <h2>What we do not do</h2>
+    <p>No individual energy advice, no applications on your behalf, no quotes and no referrals to installers. Independent advice comes from energy advisers on the federal expert list (Energieeffizienz-Expertenliste) and the consumer advice centres.</p>
+  </div>
+</PageLayout>

@@ -1,0 +1,67 @@
+---
+/**
+ * Rendering einer Ratgeber- oder Rechnerseite aus `src/content/`. Reihenfolge (RECETTE §9.3, §21):
+ * H1 und Einleitung, dann sofort der Rechner, sichtbar ohne zu scrollen (§5, Regel vom 2026-10-11);
+ * Rechnerseite: Rechner, dann zitierbarer Absatz (eingeklappt); Ratgeber: Mini-Rechner, zitierbarer Absatz, Text. FAQ, verwandte Seiten, Quellen und Autorenkasten kommen aus dem PageLayout (§7).
+ */
+import PageLayout from '../layouts/PageLayout.astro';
+import MiniSim from './calc/MiniSim';
+import Clamp from './Clamp.astro';
+import ToolSwitch from './ToolSwitch.astro';
+import { route, ROUTES, type Locale } from '../i18n/routes';
+import { label } from '../i18n/nav';
+import { t } from '../i18n/ui';
+import { pageById } from '../lib/guides';
+import { helpers } from '../lib/helpers';
+import { P } from '../lib/engine/params';
+import { articleSchema, faqSchema, breadcrumbSchema, webPageSchema, webApplicationSchema } from '../lib/seo';
+import { AUTHOR_NAME } from '../data/site-config';
+import type { PageDef } from '../lib/guide-types';
+interface Props { page: PageDef; lang: Locale }
+const { page, lang } = Astro.props;
+const raw = page[lang];
+const D = (t: string) => t;
+const x = { ...raw, intro: D(raw.intro), resume: D(raw.resume), h1: D(raw.h1), faqs: raw.faqs.map((f) => ({ q: D(f.q), a: D(f.a) })) };
+const ui = t(lang);
+const path = route(page.id, lang);
+const parts = D(raw.body(helpers(lang))).split(/<!--mini:([A-Za-z0-9_]+)-->/);
+const jsonLd = [articleSchema({ title: x.h1, description: x.description, path, lang }), webPageSchema({ name: x.h1, description: x.description, path, lang }), breadcrumbSchema([{ name: ui.breadcrumbHome, path: route('home', lang) }, { name: x.nav, path }])];
+if (page.tool) jsonLd.push(webApplicationSchema({ name: x.h1, description: x.description, path, lang }));
+if (x.faqs.length) jsonLd.push(faqSchema(x.faqs, lang));
+const related = page.related.filter((id) => ROUTES.some((r) => r.id === id)).map((id) => ({ href: route(id, lang), name: label(id, lang), description: D(pageById(id)?.[lang].card ?? '') }));
+const sources = page.sources.map((k) => ({ name: P.sources[k].label[lang], url: P.sources[k].url }));
+const methodHref = route('method', lang);
+const cible = page.miniHref ?? 'home';
+const miniHref = ROUTES.some((r) => r.id === cible) ? route(cible, lang) : undefined;
+const preset = (page.toolPreset ?? {}) as Record<string, never>;
+/** Ziel der eingebetteten Mini-Rechner: der große Rechner zum selben Thema. */
+const MINI_ZIEL: Record<string, string> = {
+  co2jahr: 'co2-steuer', co2oel: 'co2-steuer',
+  biotreppe: 'heizkosten-rechner', gasneu: 'heizkosten-rechner', gaspreis: 'heizkosten-rechner', vergleich: 'heizkosten-rechner', land: 'heizkosten-rechner', fernwaerme: 'heizkosten-rechner', wpgas: 'waermepumpe-rechner',
+  klasse: 'waermepumpe-stromverbrauch', strompreis: 'waermepumpe-stromverbrauch', tarif: 'waermepumpe-stromverbrauch',
+};
+const zielVon = (kind: string) => { const id = MINI_ZIEL[kind] ?? 'waermepumpe-foerderung'; return ROUTES.some((r) => r.id === id) ? route(id, lang) : miniHref; };
+---
+<PageLayout title={x.title} description={x.description} lang={lang} jsonLd={jsonLd} faqs={x.faqs} related={related} sources={sources} breadcrumbs={[{ label: x.nav }]}>
+  <article>
+    <header class="mb-6">
+      <h1 class="text-3xl font-bold text-navy-900 md:text-4xl">{x.h1}</h1>
+      <p class="mt-3 text-lg text-navy-700">{x.intro}</p>
+      <p class="mt-3 text-sm text-navy-600">{ui.reviewedBy} <a href={route('about', lang)} class="underline hover:text-navy-900">{AUTHOR_NAME}</a> · <a href={route('editorial', lang)} class="underline hover:text-navy-900">{ui.editorialPolicy}</a> · <a href={methodHref} class="underline hover:text-navy-900">{label('method', lang)}</a></p>
+    </header>
+    {page.tool ? (
+      <>
+        <div data-outil><ToolSwitch tool={page.tool} lang={lang} methodHref={methodHref} preset={preset} /></div>
+        <Clamp text={x.resume} lang={lang} id={`clamp-${page.id}`} class="mt-6" />
+      </>
+    ) : (
+      <>
+        {page.mini && <MiniSim client:load kind={page.mini} lang={lang} href={miniHref} defaults={page.miniDefaults} lead />}
+        <p class="mt-6 text-navy-800">{x.resume}</p>
+      </>
+    )}
+    <div class="prose prose-slate mt-8 max-w-none">
+      {parts.map((p, i) => i % 2 === 0 ? <Fragment set:html={p} /> : <div class="not-prose my-6"><MiniSim client:load kind={p} lang={lang} href={zielVon(p)} /></div>)}
+    </div>
+  </article>
+</PageLayout>

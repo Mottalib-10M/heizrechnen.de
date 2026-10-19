@@ -1,0 +1,25 @@
+# Domaines des sources primaires de de-heizung (lu par check-regles.py et check-seo.py)
+
+# KfW : banque publique de développement (Anstalt des öffentlichen Rechts) qui accorde le Zuschuss 458 ; page produit, Merkblatt, communiqués
+kfw.de
+
+# BAFA : Bundesamt für Wirtschaft und Ausfuhrkontrolle, autorité fédérale qui gère Heizungsoptimierung et Effizienzmaßnahmen
+bafa.de
+
+# energiewechsel.de : portail du ministère fédéral de l'Économie (BMWE), FAQ officielle BEG et texte de la Richtlinie
+energiewechsel.de
+
+# DEHSt : Deutsche Emissionshandelsstelle (au sein de l'Umweltbundesamt), rapports de vente des certificats nEHS
+dehst.de
+
+# DWD : Deutscher Wetterdienst, service météorologique fédéral, Gradtagzahlen (open data)
+dwd.de
+
+# Fraunhofer ISE : institut public de recherche, mesures de JAZ de pompes à chaleur en bâtiment existant (seule mesure de terrain publiée)
+ise.fraunhofer.de
+
+# recht.bund.de : Bundesgesetzblatt électronique officiel (BGBl. 2026 I Nr. 226)
+recht.bund.de
+
+# Commission européenne : ETS2 et Weekly Oil Bulletin
+europa.eu

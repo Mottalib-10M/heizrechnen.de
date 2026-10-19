@@ -1,0 +1,31 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import LegalIdentity from '../../components/LegalIdentity.astro';
+import { AUTHOR_NAME, CLARITY_ID, CONTACT_EMAIL, GA4_ID, LAST_UPDATED, SITE_URL } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'en';
+---
+<PageLayout title="Legal notice: publisher of these German heating calculators" description="Legal notice under section 5 DDG and section 18 MStV: who publishes the German heating grant, running cost, heat pump and CO₂ calculators, who is responsible, who hosts." lang={lang} noindex={true} breadcrumbs={[{ label: 'Legal notice' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Legal notice</h1>
+    <p>Information under section 5 of the German Digital Services Act (DDG) for {SITE_URL}.</p>
+    <h2>Publisher</h2>
+    <LegalIdentity lang={lang} />
+    <h2>Responsible for content (section 18(2) MStV)</h2>
+    <p>{AUTHOR_NAME}, address as above, email <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <h2>Hosting</h2>
+    <LegalIdentity mode="hosting" lang={lang} />
+    <h2>What the site does</h2>
+    <p>The site works out the grant for replacing a heating system under the federal efficient buildings funding guideline, running costs from official energy prices and degree days, and CO₂ costs under the Fuel Emissions Trading Act. It is not a service of the promotional bank, BAFA or any authority, not energy advice, not legal or tax advice, and it does not refer installers. Only the bank decides on your application. Methods: <a href={route('method', lang)}>how we calculate</a>.</p>
+    <h2>Liability</h2>
+    <p>Values are checked after every change to the guideline, the law and the official prices and are tested automatically before each release; we cannot guarantee that they are free of errors. Linked third-party sites are the responsibility of their operators. Please report errors via the <a href={route('contact', lang)}>contact page</a>.</p>
+    <h2>Embedding</h2>
+    <p>The grant calculator and the running cost calculator may be embedded free of charge by iframe as long as the source link stays visible: <a href={route('widget', lang)}>embed a calculator</a>.</p>
+    {/* gen-legal-pages:terms */}
+    <h2>Personal data and cookies</h2>
+    {GA4_ID ? (<p>What you type in the calculators stays in your browser. The site sets Google Analytics audience measurement cookies (<code>_ga</code>, <code>_ga_{GA4_ID.replace('G-', '')}</code>, 13 months at most), with no advertising{CLARITY_ID && '; page stability is monitored with Microsoft Clarity, cookie-free'}. Details, legal basis and how to object: <a href={route('privacy', lang)}>privacy policy</a> and <a href={route('cookies', lang)}>cookies</a> page.</p>) : (<p>What you type in the calculators stays in your browser and the site sets no cookies{CLARITY_ID && '; page stability is monitored anonymously with Microsoft Clarity, cookie-free'}. See the <a href={route('privacy', lang)}>privacy policy</a> and the <a href={route('cookies', lang)}>cookies</a> page.</p>)}
+    {/* /gen-legal-pages:terms */}
+    <h2>Consumer dispute resolution</h2>
+    <p>We are neither willing nor obliged to take part in proceedings before a consumer arbitration board. Privacy: <a href={route('privacy', lang)}>privacy policy</a> and <a href={route('cookies', lang)}>cookies</a>. Version: {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

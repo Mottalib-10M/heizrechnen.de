@@ -1,0 +1,20 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { CONTACT_EMAIL, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { contactPageSchema } from '../../lib/seo';
+const lang = 'de';
+const description = 'Schreiben Sie uns, wenn ein Fördersatz oder Preis veraltet ist, Ihre Förderzusage vom Rechner abweicht, ein Fall fehlt oder Sie den Förderrechner einbinden möchten.';
+---
+<PageLayout title={`Kontakt zu ${SITE_NAMES[lang]}: Fehler melden, Rechner einbinden`} description={description} lang={lang} noindex={true} jsonLd={[contactPageSchema({ name: 'Kontakt', description, path: route('contact', lang), lang })]} breadcrumbs={[{ label: 'Kontakt' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Kontakt</h1>
+    <p>E-Mail: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Antwort meist innerhalb einer Woche.</p>
+    <h2>Ihre Zusage weicht vom Rechner ab</h2>
+    <p>Schicken Sie den Teilen-Link aus dem Rechner und die Beträge aus Ihrem Zuwendungsbescheid, ohne Namen, Adresse und Antragsnummer. Häufig liegt der Unterschied an nicht förderfähigen Kostenteilen, am Antragsdatum oder am angesetzten Einkommen. Liegt er bei uns, korrigieren wir und nehmen den Fall als Test auf.</p>
+    <h2>Rechner einbinden</h2>
+    <p>Energieberater, Verbände, Kommunen und Redaktionen können die Rechner kostenlos einbinden: <a href={route('widget', lang)}>Rechner einbinden</a>.</p>
+    <h2>Was wir nicht leisten</h2>
+    <p>Keine Energieberatung im Einzelfall, keine Antragstellung für Sie, keine Angebote und keine Vermittlung von Handwerksbetrieben. Unabhängig beraten Energieberater aus der Energieeffizienz-Expertenliste und die Verbraucherzentralen.</p>
+  </div>
+</PageLayout>

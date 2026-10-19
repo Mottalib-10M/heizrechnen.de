@@ -1,0 +1,99 @@
+---
+/** So rechnen wir (Vertrauensseite, RECETTE §8.2): Rechenregeln, Daten, Tests, Grenzen, alle Quellen. */
+import PageLayout from '../layouts/PageLayout.astro';
+import { route, type Locale } from '../i18n/routes';
+import { P } from '../lib/engine/params';
+import { formatMoney, formatNumber, formatPercent, displayDate } from '../lib/format';
+import { breadcrumbSchema, webPageSchema } from '../lib/seo';
+import { LAST_UPDATED, CONTACT_EMAIL, REVIEW_CYCLE_MONTHS, LANG_TAGS } from '../data/site-config';
+import { kgJeLiterOel, kgJeKwhGas, kwhJeLiterOel, gasHiHs } from '../lib/engine/co2';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const de = lang === 'de';
+const $ = (n: number, d = 0) => formatMoney(n, d, lang);
+const n = (x: number, d = 0) => formatNumber(x, d, lang);
+const pc = (x: number, d = 0) => formatPercent(x, d, lang);
+const dt = (iso: string) => displayDate(iso, LANG_TAGS[lang]);
+const F = P.foerderung, C = P.co2, T = P.technik, PR = P.preise;
+const title = de ? 'Heizungsförderung berechnen 2026: So rechnet Heizwechsel' : 'Heating Grant Calculation 2026: How Heizwechsel Works';
+const description = de ? 'Heizungsförderung 2026 offengelegt: Sätze und Stichtage der Richtlinie, Höchstbeträge, Gradtage, Energiepreise, CO₂-Faktoren, Tests und Grenzen der Rechner.' : 'Heating grant calculation 2026 in the open: guideline rates and dates, cost caps, degree days, energy prices, CO₂ factors, tests and each tool’s limits.';
+const h1 = de ? 'So rechnen wir' : 'How we calculate';
+const path = route('method', lang);
+const sources = Object.values(P.sources);
+const kgb = F.kgb_stufen.map((s) => `${dt(s.ab)}: ${pc(s.satz)}`).join(' · ');
+const hb = F.hoechst_erste_we.map((s) => `${dt(s.ab)}: ${$(s.betrag)}`).join(' · ');
+const gt = P.klima.laender.map((l) => l.gt);
+---
+<PageLayout title={title} description={description} lang={lang} jsonLd={[webPageSchema({ name: h1, description, path, lang }), breadcrumbSchema([{ name: de ? 'Start' : 'Home', path: route('home', lang) }, { name: h1, path }])]} breadcrumbs={[{ label: h1 }]}>
+  <header class="mb-6"><h1 class="text-3xl font-bold text-navy-900 md:text-4xl">{h1}</h1></header>
+  {de ? (
+  <div class="prose prose-slate max-w-none">
+    <p>Jeder Rechtswert und jede Zahl der Rechner steht in einer einzigen Parameterdatei, gelesen am <time datetime={P.retrieved_at}>{dt(P.retrieved_at)}</time>. Rechner und Texte lesen nur aus dieser Datei; geändert wird an einer Stelle, und alle Seiten folgen.</p>
+    <h2>Zuschuss</h2>
+    <p>Grundlage ist die Richtlinie für die Bundesförderung für effiziente Gebäude, Einzelmaßnahmen, vom 17. August 2026 (Bundesanzeiger vom 27. August 2026), die für Anträge ab dem 21. Juli 2026 gilt, dazu das Merkblatt der Förderbank im Stand 09/2026. Für Anträge bis zum 20. Juli 2026 rechnet der Rechner mit der Richtlinie vom 21. Dezember 2023: {pc(F.alt.grund)} Grundförderung, {pc(F.alt.kgb)} Klimabonus, {pc(F.alt.effizienz)} Effizienzbonus, {pc(F.alt.eb)} Einkommensbonus bis {$(F.alt.eb_zve_bis)}, Deckel {pc(F.alt.deckel)}, Höchstbetrag {$(F.alt.hoechst_erste_we)}.</p>
+    <p>Rechenweg wie in den Beispielen der Förderbank: Zuerst der Höchstbetrag des Gebäudes ({$(F.hoechst_erste_we[0].betrag)} für die erste Wohnung bei Antrag bis 31. Januar 2027, {$(F.hoechst_we_2_bis_6)} für die zweite bis sechste, {$(F.hoechst_we_ab_7)} ab der siebten). Die Grundförderung von {pc(F.grund)} gilt für die förderfähigen Kosten des ganzen Gebäudes. Die Boni gelten nur für den Anteil der selbst bewohnten Wohnung: im Haus mit mehreren Wohnungen gleichmäßig verteilt, in der Eigentümergemeinschaft nach Miteigentumsanteil, höchstens der Höchstbetrag geteilt durch die Zahl der Wohnungen. Der Gesamtsatz dieser Wohnung wird auf {pc(F.deckel_standard)} gedeckelt, bei zu versteuerndem Einkommen bis {$(F.deckel_niedrig_zve)} (nach Familienzuschlag) auf {pc(F.deckel_niedrig)}.</p>
+    <p>Klimageschwindigkeitsbonus nach Antragsdatum: {kgb}. Er gilt für Öl-, Kohle-, Nachtspeicher- und Gasetagenheizungen in jedem Alter und für Gas- und Biomasseheizungen ab {F.kgb_mindestalter_gas_biomasse} Jahren. Höchstbetrag der ersten Wohnung: {hb}. Einkommensbonus: {F.einkommen_stufen.map((s) => `${pc(s.bonus)} bis ${$(s.bis)}`).join(', ')}; mit mindestens einem Kind unter 18 werden einmalig {$(F.familienzuschlag)} abgezogen.</p>
+    <p>Ab dem ersten Quartal 2027 sieht die Richtlinie für Wärmepumpen {pc(F.q1_2027.wp_grund)} Grundförderung und {pc(F.q1_2027.wertschoepfung)} Wertschöpfungsbonus bei Herkunft aus der EU vor. Weil der Starttag fehlt, rechnet der Rechner im ersten Quartal 2027 mit dem heutigen Satz und kennzeichnet das Ergebnis für Geräte ohne EU-Herkunft als unsicher; ab dem 1. April 2027 setzt er die neuen Sätze an.</p>
+    <h2>Wärmebedarf und Klima</h2>
+    <p>Ohne gemessenen Verbrauch: Wohnfläche mal Mitte der Effizienzklasse nach Anlage 10 des Gebäudemodernisierungsgesetzes (Endenergie), mal Nutzungsgrad eines Kessels von {pc(P.annahmen.nutzungsgrad_kessel, 1)}. Diese Klassenwerte gelten für ein Referenzklima. Für das Bundesland wird der Raumwärmeanteil mit dem Verhältnis der Gradtagzahl G20/15 des Landes zur Station Potsdam ({n(P.klima.referenz_potsdam)} Kd) skaliert; das Warmwasser ({pc(T.anteil_warmwasser)} der Wärme nach Fraunhofer ISE) bleibt gleich. Die Gradtagzahlen sind Mittel der Jahre {P.klima.jahre} aus den Monatswerten des Deutschen Wetterdienstes nach VDI 3807, je Land gemittelt über ein bis vier Stationen großer Städte; sie liegen zwischen {n(Math.min(...gt))} und {n(Math.max(...gt))} Kd. Ländliche und höher gelegene Orte sind kälter.</p>
+    <p>Mit gemessenem Verbrauch: Gas in kWh laut Rechnung (Brennwert) mal {n(gasHiHs, 3)} auf den Heizwert, Heizöl mit {n(kwhJeLiterOel, 2)} kWh je Liter (aus den Faktoren der EBeV 2030), jeweils mal Nutzungsgrad.</p>
+    <h2>Heizkosten</h2>
+    <p>Wärmepumpe: Wärme geteilt durch die Jahresarbeitszahl; voreingestellt ist der im Altbau gemessene Mittelwert von {n(T.jaz_luft_messung, 1)} für Luft und {n(T.jaz_sole_messung, 1)} für Erdwärme (Fraunhofer ISE, Projekt WP-QS im Bestand). Preise: Gas {n(PR.gas_ct, 2)} ct/kWh und Haushaltsstrom {n(PR.strom_haushalt_ct, 2)} ct/kWh im {PR.gas_stand} (Destatis, Durchschnitt mit Grundpreis), Wärmepumpenstrom mit eigenem Zähler {n(PR.wp_strom_getrennt_ct, 2)} ct/kWh und mit einem Zähler {n(PR.wp_strom_gemeinsam_ct, 2)} ct/kWh am 1. April 2025 (Bundesnetzagentur, Monitoringbericht 2025; vor den niedrigeren Netzentgelten 2026, also eher zu hoch), Heizöl {n(PR.oel_eur_100l_12monate, 2)} € je 100 Liter im Schnitt der zwölf Monate bis {dt(PR.oel_stand_aktuell)}, zuletzt {n(PR.oel_eur_100l_aktuell, 2)} € (Weekly Oil Bulletin der EU-Kommission). Für Fernwärme gibt es keinen amtlichen Durchschnittspreis; der Rechner nimmt nur Ihren eigenen.</p>
+    <p>Amortisation: Eigenanteil nach Zuschuss minus Kosten einer Alternative, die Sie eintragen, geteilt durch die Ersparnis im Jahr. Ohne Zinsen, ohne Preissteigerung, ohne Wartung.</p>
+    <h2>CO₂</h2>
+    <p>Emissionsfaktoren aus Anlage 2 der EBeV 2030: Heizöl {n(kgJeLiterOel, 3)} kg CO₂ je Liter, Erdgas {n(kgJeKwhGas, 4)} kg je kWh der Gasrechnung. Preis 2026: Korridor {C.korridor_2026.min} bis {C.korridor_2026.max} € je Tonne (§ 10 BEHG), Durchschnitt der Versteigerungen bis August {C.auktion_2026_durchschnitt} €. 2027: Der Korridor von {C.korridor_2027_beschlossen.min} bis {C.korridor_2027_beschlossen.max} € ist vom Bundestag beschlossen, aber nicht verkündet; der Rechner zeigt ihn als „beschlossen, nicht in Kraft“. Ab {C.ets2_start} rechnet er nur Szenarien, die Sie wählen. Aufteilung zwischen Mieter und Vermieter nach der Stufentabelle des CO2KostAufG, § 8 (Nichtwohngebäude), § 9 (Halbierung) und § 5a (neue Gas- und Ölheizungen ab 2028 hälftig).</p>
+    <h2>Tests vor jeder Veröffentlichung</h2>
+    <ul>
+      <li>Die gerechneten Beispiele der Förderbank auf ihrer Produktseite: Haus mit Einliegerwohnung, Eigentümergemeinschaft mit sieben Wohnungen und drei Zusatzanträgen, Klimagerät im Sondereigentum, Höchstförderung von 80 Prozent.</li>
+      <li>Jede Stufe des Klimageschwindigkeitsbonus und des Höchstbetrags am Stichtag und am Vortag, die Einkommensgrenzen mit und ohne Familienzuschlag, die alte Richtlinie.</li>
+      <li>CO₂-Faktoren, jede Grenze der Stufentabelle, Halbierung nach § 9, Heizkosten und Klimafaktor aller 16 Länder.</li>
+    </ul>
+    <h2>Was die Rechner nicht können</h2>
+    <ul>
+      <li>Die Förderfähigkeit Ihres Geräts prüfen: Die Wärmepumpe muss in der Liste des BAFA stehen, eine Jahresarbeitszahl von mindestens {n(T.jaz_foerder_min, 1)} erreichen und leise genug sein.</li>
+      <li>Kommunale oder Landesprogramme einrechnen; sie ändern sich oft und schließen die Bundesboni teilweise aus.</li>
+      <li>Ein Angebot ersetzen: Die Kosten tragen Sie selbst ein. Wir vermitteln keine Betriebe und sammeln keine Anfragen.</li>
+      <li>Persönliche Beratung: Dafür gibt es Energieberater aus der Expertenliste und die Verbraucherzentralen.</li>
+    </ul>
+    <h2>Aktualisierung</h2>
+    <p>Volle Durchsicht spätestens alle {REVIEW_CYCLE_MONTHS} Monate, dazu an jedem Stichtag der Richtlinie (1. Februar und 1. August), nach jeder Veröffentlichung von Destatis zu den Energiepreisen und sobald der Starttag für das erste Quartal 2027 oder das BEHG für 2027 verkündet ist. Fehler bitte an <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Siehe auch die <a href={route('editorial', lang)}>Redaktionsgrundsätze</a>.</p>
+    <h2>Alle Quellen</h2>
+    <ul>{sources.map((s) => <li><a href={s.url} rel="nofollow noopener" target="_blank">{s.label.de}</a></li>)}</ul>
+  </div>
+  ) : (
+  <div class="prose prose-slate max-w-none">
+    <p>Every legal value and every figure used by the calculators sits in one parameter file, read on <time datetime={P.retrieved_at}>{dt(P.retrieved_at)}</time>. Calculators and pages read only from that file; a change is made in one place and every page follows.</p>
+    <h2>Grant</h2>
+    <p>The basis is the federal efficient buildings funding guideline for individual measures (BEG EM) of 17 August 2026 (Federal Gazette of 27 August 2026), which applies to applications from 21 July 2026, plus the bank’s information sheet, edition 09/2026. For applications up to 20 July 2026 the calculator uses the guideline of 21 December 2023: {pc(F.alt.grund)} basic grant, {pc(F.alt.kgb)} climate bonus, {pc(F.alt.effizienz)} efficiency bonus, {pc(F.alt.eb)} income bonus up to {$(F.alt.eb_zve_bis)}, ceiling {pc(F.alt.deckel)}, cap {$(F.alt.hoechst_erste_we)}.</p>
+    <p>The method follows the bank’s worked examples. First the building’s cap ({$(F.hoechst_erste_we[0].betrag)} for the first home when applying by 31 January 2027, {$(F.hoechst_we_2_bis_6)} for homes two to six, {$(F.hoechst_we_ab_7)} from the seventh). The {pc(F.grund)} basic grant applies to the whole building’s eligible costs. Bonuses apply only to the share of the home the owner lives in: split equally in a house with several homes, by ownership share in an owners’ association, at most the cap divided by the number of homes. That home’s total rate is capped at {pc(F.deckel_standard)}, or {pc(F.deckel_niedrig)} for taxable income up to {$(F.deckel_niedrig_zve)} (after the family allowance).</p>
+    <p>Climate speed bonus by application date: {kgb}. It applies to oil, coal, night storage and gas flat heaters of any age and to gas and biomass boilers aged {F.kgb_mindestalter_gas_biomasse} years or more. Cap for the first home: {hb}. Income bonus: {F.einkommen_stufen.map((s) => `${pc(s.bonus)} up to ${$(s.bis)}`).join(', ')}; {$(F.familienzuschlag)} is deducted once if at least one child under 18 lives with you.</p>
+    <p>From the first quarter of 2027 the guideline sets {pc(F.q1_2027.wp_grund)} basic grant for heat pumps plus a {pc(F.q1_2027.wertschoepfung)} value-added bonus if made in the EU. As the start date is missing, the calculator keeps today’s rate during Q1 2027 and flags the result as uncertain for units not made in the EU; from 1 April 2027 it applies the new rates.</p>
+    <h2>Heat demand and climate</h2>
+    <p>Without measured consumption: living space times the midpoint of the efficiency class in Annex 10 of the Building Modernisation Act (final energy), times a boiler efficiency of {pc(P.annahmen.nutzungsgrad_kessel, 1)}. Those class values refer to a reference climate. For the state, the space heating share is scaled by the ratio of the state’s G20/15 degree days to the Potsdam station ({n(P.klima.referenz_potsdam)} Kd); hot water ({pc(T.anteil_warmwasser)} of heat according to Fraunhofer ISE) stays the same. Degree days are {P.klima.jahre} averages of the German Weather Service’s monthly VDI 3807 values, averaged per state over one to four city stations; they range from {n(Math.min(...gt))} to {n(Math.max(...gt))} Kd. Rural and higher places are colder.</p>
+    <p>With measured consumption: gas in kWh from the bill (gross calorific value) times {n(gasHiHs, 3)} to net calorific value, heating oil at {n(kwhJeLiterOel, 2)} kWh per litre (from the EBeV 2030 factors), each times the boiler efficiency.</p>
+    <h2>Running costs</h2>
+    <p>Heat pump: heat divided by the seasonal performance factor; the default is the mean measured in older homes, {n(T.jaz_luft_messung, 1)} for air and {n(T.jaz_sole_messung, 1)} for ground source (Fraunhofer ISE, WP-QS project). Prices: gas {n(PR.gas_ct, 2)} ct/kWh and household electricity {n(PR.strom_haushalt_ct, 2)} ct/kWh in the first half of 2026 (Federal Statistical Office, average including standing charge), heat pump electricity {n(PR.wp_strom_getrennt_ct, 2)} ct/kWh with a separate meter and {n(PR.wp_strom_gemeinsam_ct, 2)} ct/kWh on a shared meter on 1 April 2025 (Federal Network Agency, monitoring report 2025; before the lower 2026 grid fees, so probably high), heating oil €{n(PR.oel_eur_100l_12monate, 2)} per 100 litres on average over the twelve months to {dt(PR.oel_stand_aktuell)}, latest €{n(PR.oel_eur_100l_aktuell, 2)} (European Commission Weekly Oil Bulletin). There is no official average price for district heating; the calculator only uses your own.</p>
+    <p>Payback: your share after the grant minus the cost of an alternative you enter, divided by the saving a year. No interest, no price changes, no maintenance.</p>
+    <h2>CO₂</h2>
+    <p>Emission factors from Annex 2 of the EBeV 2030: heating oil {n(kgJeLiterOel, 3)} kg CO₂ per litre, natural gas {n(kgJeKwhGas, 4)} kg per kWh on the gas bill. 2026 price: corridor €{C.korridor_2026.min} to €{C.korridor_2026.max} per tonne (section 10 BEHG), average auction price to August €{C.auktion_2026_durchschnitt}. 2027: the €{C.korridor_2027_beschlossen.min} to €{C.korridor_2027_beschlossen.max} corridor has been passed by the Bundestag but not promulgated; the calculator shows it as “passed, not in force”. From {C.ets2_start} it only runs scenarios you choose. Split between tenant and landlord by the CO2KostAufG tier table, section 8 (non-residential), section 9 (halving) and section 5a (new gas and oil boilers split in half from 2028).</p>
+    <h2>Tests before every release</h2>
+    <ul>
+      <li>The bank’s worked examples on its product page: house with a granny flat, an owners’ association with seven flats and three additional applications, a split air conditioner in a flat, the 80 percent maximum.</li>
+      <li>Every step of the climate bonus and the cap on the date and the day before, the income limits with and without the family allowance, the old guideline.</li>
+      <li>CO₂ factors, every boundary of the tier table, halving under section 9, running costs and climate factor for all 16 states.</li>
+    </ul>
+    <h2>What the calculators cannot do</h2>
+    <ul>
+      <li>Check whether your unit qualifies: the heat pump must be on the BAFA list, reach a seasonal performance factor of at least {n(T.jaz_foerder_min, 1)} and be quiet enough.</li>
+      <li>Include municipal or state schemes; they change often and some exclude the federal bonuses.</li>
+      <li>Replace a quote: you enter the cost yourself. We do not refer installers or collect enquiries.</li>
+      <li>Personal advice: for that there are energy advisers on the federal expert list and the consumer advice centres (Verbraucherzentralen).</li>
+    </ul>
+    <h2>Updates</h2>
+    <p>Full review at least every {REVIEW_CYCLE_MONTHS} months, plus on each date the guideline changes (1 February and 1 August), after each energy price release by the Federal Statistical Office and as soon as the Q1 2027 start date or the 2027 BEHG is promulgated. Report errors to <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. See the <a href={route('editorial', lang)}>editorial policy</a>.</p>
+    <h2>All sources</h2>
+    <ul>{sources.map((s) => <li><a href={s.url} rel="nofollow noopener" target="_blank">{s.label.en}</a></li>)}</ul>
+  </div>
+  )}
+  <p class="mt-6 text-sm text-navy-600">{de ? 'Zuletzt geprüft' : 'Last checked'}: <time datetime={LAST_UPDATED}>{dt(LAST_UPDATED)}</time>.</p>
+</PageLayout>

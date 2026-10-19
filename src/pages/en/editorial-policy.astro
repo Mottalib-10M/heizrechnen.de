@@ -1,0 +1,28 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { AUTHOR_NAME, CONTACT_EMAIL, LAST_UPDATED, REVIEW_CYCLE_MONTHS, SITE_NAMES } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+const lang = 'en';
+---
+<PageLayout title={`Editorial policy of ${SITE_NAMES[lang]}: sources and checks`} description="Where grant rates, deadlines, energy prices, degree days and CO₂ values come from, when they are checked, how announcements are handled and what happens when we get one wrong." lang={lang} noindex={true} breadcrumbs={[{ label: 'Editorial policy' }]} showAuthor={false}>
+  <div class="prose prose-slate max-w-none">
+    <h1>Editorial policy and corrections</h1>
+    <p>Apply a month too late or plan with a grant rate that no longer applies and the money is gone for good. So this page says where every figure comes from and what happens when one is wrong.</p>
+    <h2>Responsibility</h2><p>Content and calculators are the responsibility of {AUTHOR_NAME}. Contact: <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.</p>
+    <h2>Primary sources only</h2>
+    <ul>
+      <li><strong>Federal Gazette and the promotional bank (KfW)</strong>: the federal efficient buildings funding guideline, information sheets, product pages with worked examples;</li>
+      <li><strong>Federal Law Gazette and gesetze-im-internet.de</strong>: Building Modernisation Act, Fuel Emissions Trading Act, CO₂ Cost Allocation Act, Heat Planning Act, Income Tax Act;</li>
+      <li><strong>German Bundestag</strong>: where bills stand;</li>
+      <li><strong>Federal Statistical Office, Federal Network Agency, European Commission, German Weather Service, Fraunhofer ISE</strong>: energy prices, degree days and measured performance factors.</li>
+    </ul>
+    <p>Manufacturers, installers, comparison portals and press reports are not sources, even when they rank first in search results.</p>
+    <h2>Announcements and bills</h2><p>What an authority announces without a fixed date or rule, and what the Bundestag has passed but not yet promulgated, is labelled and dated as such. The calculator visibly flags any result that depends on such a rule as uncertain.</p>
+    <h2>Checks before every release</h2><p>The bank’s worked examples, every step of the bonuses and caps, the CO₂ factors and the CO₂ split tier table run as automated tests. A value that differs stops the release.</p>
+    <h2>Rhythm</h2><p>Full review at least every {REVIEW_CYCLE_MONTHS} months, plus on each date the guideline changes, after new price data and after every change in the law.</p>
+    <h2>Handling errors</h2>
+    <ol><li>Check against the primary source.</li><li>Fix the parameter file or the calculator and add a test.</li><li>New date on every page; a correction of substance is noted on the page.</li></ol>
+    <h2>Independence</h2><p>No money from manufacturers, installers, energy suppliers or brokers. No product recommendations, no quote form.</p>
+    <p>See also <a href={route('method', lang)}>how we calculate</a>. Version: {LAST_UPDATED}.</p>
+  </div>
+</PageLayout>

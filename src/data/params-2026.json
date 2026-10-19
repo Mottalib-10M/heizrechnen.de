@@ -1,0 +1,789 @@
+{
+  "_lisezmoi": "Tous les paramètres du site (aide KfW 458, GEG, CO₂, prix, climat) vivent ici, jamais en dur (RECETTE §4). Chaque valeur a été relue sur la source citée ; retrieved_at = jour de lecture.",
+  "year": 2026,
+  "retrieved_at": "2026-10-19",
+  "valid_from": "2026-07-21",
+  "valid_to": "2026-12-31",
+  "foerderung": {
+    "_quelle": "Richtlinie BEG EM vom 17.08.2026 (BAnz AT 27.08.2026 B1), Nr. 8.3.1, 8.4.1, 8.4.4 bis 8.4.6, 10 ; Merkblatt KfW 458 Stand 09/2026, gültig ab 24.09.2026",
+    "richtlinie_in_kraft": "2026-07-21",
+    "richtlinie_datum": "2026-08-17",
+    "richtlinie_veroeffentlicht": "2026-08-27",
+    "richtlinie_ende": "2030-12-31",
+    "grund": 0.3,
+    "deckel_standard": 0.7,
+    "deckel_niedrig": 0.8,
+    "deckel_niedrig_zve": 30000,
+    "einkommen_stufen": [
+      {
+        "bis": 30000,
+        "bonus": 0.4
+      },
+      {
+        "bis": 40000,
+        "bonus": 0.3
+      },
+      {
+        "bis": 50000,
+        "bonus": 0.1
+      }
+    ],
+    "familienzuschlag": 10000,
+    "kgb_stufen": [
+      {
+        "ab": "2026-07-21",
+        "satz": 0.16
+      },
+      {
+        "ab": "2027-02-01",
+        "satz": 0.12
+      },
+      {
+        "ab": "2027-08-01",
+        "satz": 0.08
+      },
+      {
+        "ab": "2028-02-01",
+        "satz": 0.04
+      },
+      {
+        "ab": "2028-08-01",
+        "satz": 0
+      }
+    ],
+    "kgb_mindestalter_gas_biomasse": 20,
+    "hoechst_erste_we": [
+      {
+        "ab": "2026-07-21",
+        "betrag": 28000
+      },
+      {
+        "ab": "2027-02-01",
+        "betrag": 27250
+      },
+      {
+        "ab": "2027-08-01",
+        "betrag": 26500
+      },
+      {
+        "ab": "2028-02-01",
+        "betrag": 25750
+      },
+      {
+        "ab": "2028-08-01",
+        "betrag": 25000
+      },
+      {
+        "ab": "2029-02-01",
+        "betrag": 24250
+      },
+      {
+        "ab": "2029-08-01",
+        "betrag": 23500
+      },
+      {
+        "ab": "2030-02-01",
+        "betrag": 22750
+      },
+      {
+        "ab": "2030-08-01",
+        "betrag": 22000
+      }
+    ],
+    "hoechst_we_2_bis_6": 15000,
+    "hoechst_we_ab_7": 8000,
+    "mindestinvestition": 300,
+    "bewilligung_monate": 36,
+    "nachweis_monate": 6,
+    "zusatzantrag_monate": 6,
+    "nutzungspflicht_jahre": 10,
+    "kumulierung_max": 0.6,
+    "gebaeude_mindestalter_jahre": 5,
+    "q1_2027": {
+      "_statut": "In der Richtlinie beschlossen « ab dem ersten Quartal 2027 », genauer Starttag noch nicht veröffentlicht (KfW-FAQ: Details im 2. Halbjahr 2026 durch das BMWE).",
+      "frueheste": "2027-01-01",
+      "spaeteste": "2027-03-31",
+      "wp_grund": 0.15,
+      "wertschoepfung": 0.15
+    },
+    "alt": {
+      "_quelle": "Richtlinie BEG EM vom 21.12.2023 (BAnz AT 29.12.2023 B1), gilt für Anträge vor dem 21.07.2026 (Nr. 10 der neuen Richtlinie)",
+      "bis": "2026-07-20",
+      "grund": 0.3,
+      "effizienz": 0.05,
+      "kgb": 0.2,
+      "eb": 0.3,
+      "eb_zve_bis": 40000,
+      "deckel": 0.7,
+      "hoechst_erste_we": 30000,
+      "biomasse_zuschlag": 2500,
+      "_details": "Nr. 8.3.1 a (30 000 / 15 000 / 8 000 €), 8.4.1 (Obergrenze 70 %), 8.4.3 Effizienz-Bonus 5 Prozentpunkte (Wärmequelle Wasser, Erdreich, Abwasser oder natürliches Kältemittel), 8.4.4 Klimageschwindigkeits-Bonus 20 %, 8.4.5 Einkommens-Bonus 30 Prozentpunkte bis 40 000 € zvE, 8.4.6 Emissionsminderungs-Zuschlag 2 500 € für Biomasse ≤ 2,5 mg/m³ Staub"
+    },
+    "kredit": {
+      "hoechst_je_we": 120000,
+      "zinsverbilligung_zve_bis": 90000
+    }
+  },
+  "sources": {
+    "kfw458": {
+      "url": "https://www.kfw.de/inlandsfoerderung/Privatpersonen/Bestehende-Immobilie/F%C3%B6rderprodukte/Heizungsf%C3%B6rderung-f%C3%BCr-Privatpersonen-Wohngeb%C3%A4ude-%28458%29/",
+      "label": {
+        "de": "KfW: Heizungsförderung für Privatpersonen, Wohngebäude (458), Produktseite mit Beispielen",
+        "en": "KfW: heating grant for private owners, residential buildings (458), product page with worked examples"
+      }
+    },
+    "merkblatt458": {
+      "url": "https://www.kfw.de/PDF/Download-Center/F%C3%B6rderprogramme-%28Inlandsf%C3%B6rderung%29/PDF-Dokumente/6000005131_M_458.pdf",
+      "label": {
+        "de": "KfW-Merkblatt 458, Stand 09/2026, gültig ab 24.09.2026",
+        "en": "KfW information sheet 458, edition 09/2026, valid from 24 September 2026"
+      }
+    },
+    "begem2026": {
+      "url": "https://www.bundesanzeiger.de/pub/publication/jLXvW09kHTQoDINAdoC/content/jLXvW09kHTQoDINAdoC/BAnz%20AT%2027.08.2026%20B1.pdf?inline",
+      "label": {
+        "de": "Richtlinie BEG Einzelmaßnahmen vom 17. August 2026, BAnz AT 27.08.2026 B1",
+        "en": "BEG individual measures guideline of 17 August 2026, Federal Gazette AT 27.08.2026 B1"
+      }
+    },
+    "begem2023": {
+      "url": "https://www.bundesanzeiger.de/pub/publication/TevdpcR9NeEp7m7RhbJ/content/TevdpcR9NeEp7m7RhbJ/BAnz%20AT%2029.12.2023%20B1.pdf?inline",
+      "label": {
+        "de": "Richtlinie BEG Einzelmaßnahmen vom 21. Dezember 2023, BAnz AT 29.12.2023 B1 (Anträge bis 20.07.2026)",
+        "en": "BEG individual measures guideline of 21 December 2023, Federal Gazette AT 29.12.2023 B1 (applications up to 20 July 2026)"
+      }
+    },
+    "bmweFaq": {
+      "url": "https://www.energiewechsel.de/KAENEF/Redaktion/DE/FAQ/FAQ-Uebersicht/BEG/Downloads/beg-faq-260814.pdf?__blob=publicationFile&v=2",
+      "label": {
+        "de": "BMWE, KfW und BAFA: Antworten auf häufige Fragen zur BEG, Stand 14.08.2026",
+        "en": "Federal Economy Ministry, KfW and BAFA: BEG questions and answers, as of 14 August 2026"
+      }
+    },
+    "kfwPm": {
+      "url": "https://www.kfw.de/%C3%9Cber-die-KfW/Newsroom/Aktuelles/Pressemitteilungen-Details_900928.html",
+      "label": {
+        "de": "KfW-Pressemitteilung vom 08.07.2026: Anpassungen in den KfW-Produkten der BEG",
+        "en": "KfW press release of 8 July 2026 on the changed BEG products"
+      }
+    },
+    "kfwInfo": {
+      "url": "https://www.kfw.de/inlandsfoerderung/Heizungsf%C3%B6rderung/",
+      "label": {
+        "de": "KfW: Aktuelle Informationen zur Heizungsförderung",
+        "en": "KfW: current information on the heating grant"
+      }
+    },
+    "kfw358": {
+      "url": "https://www.kfw.de/358",
+      "label": {
+        "de": "KfW: Ergänzungskredit 358/359 zur Heizungsförderung",
+        "en": "KfW: top-up loan 358/359 for the heating grant"
+      }
+    },
+    "merkblatt358": {
+      "url": "https://www.kfw.de/PDF/Download-Center/F%C3%B6rderprogramme-%28Inlandsf%C3%B6rderung%29/PDF-Dokumente/6000005135_M_358_359.pdf",
+      "label": {
+        "de": "KfW-Merkblatt 358/359, Stand 09/2026",
+        "en": "KfW information sheet 358/359, edition 09/2026"
+      }
+    },
+    "bafaHzo": {
+      "url": "https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/Sanierung_Wohngebaeude/Heizungsoptimierung/heizungsoptimierung_node.html",
+      "label": {
+        "de": "BAFA: Förderung der Heizungsoptimierung",
+        "en": "BAFA: grant for optimising a heating system"
+      }
+    },
+    "bafaUeberblick": {
+      "url": "https://www.bafa.de/DE/Energie/Effiziente_Gebaeude/Foerderprogramm_im_Ueberblick/foerderprogramm_im_ueberblick_node.html",
+      "label": {
+        "de": "BAFA: Bundesförderung für effiziente Gebäude im Überblick",
+        "en": "BAFA: federal efficient buildings funding at a glance"
+      }
+    },
+    "estg35c": {
+      "url": "https://www.gesetze-im-internet.de/estg/__35c.html",
+      "label": {
+        "de": "§ 35c EStG: Steuerermäßigung für energetische Maßnahmen",
+        "en": "Section 35c Income Tax Act: tax reduction for energy-saving work"
+      }
+    },
+    "gmodgBgbl": {
+      "url": "https://www.recht.bund.de/bgbl/1/2026/226/VO.html",
+      "label": {
+        "de": "Gesetz vom 23. Juli 2026, BGBl. 2026 I Nr. 226 (Gebäudemodernisierungsgesetz)",
+        "en": "Act of 23 July 2026, Federal Law Gazette 2026 I no. 226 (Building Modernisation Act)"
+      }
+    },
+    "gmodg": {
+      "url": "https://www.gesetze-im-internet.de/geg/",
+      "label": {
+        "de": "Gebäudemodernisierungsgesetz (GModG), konsolidierte Fassung",
+        "en": "Building Modernisation Act (GModG), consolidated text"
+      }
+    },
+    "gmodg43": {
+      "url": "https://www.gesetze-im-internet.de/geg/__43.html",
+      "label": {
+        "de": "§ 43 GModG: Anteil klimafreundlicher Brennstoffe bei neuen Gas- und Ölheizungen",
+        "en": "Section 43 GModG: share of low-carbon fuels for new gas and oil boilers"
+      }
+    },
+    "gmodgAnlage10": {
+      "url": "https://www.gesetze-im-internet.de/geg/anlage_10.html",
+      "label": {
+        "de": "Anlage 10 GModG: Energieeffizienzklassen von Wohngebäuden",
+        "en": "Annex 10 GModG: energy efficiency classes of residential buildings"
+      }
+    },
+    "geg2023": {
+      "url": "https://www.recht.bund.de/bgbl/1/2023/280/regelungstext.pdf",
+      "label": {
+        "de": "Gebäudeenergiegesetz 2024, BGBl. 2023 I Nr. 280 (seit 29.07.2026 abgelöst)",
+        "en": "Building Energy Act 2024, Federal Law Gazette 2023 I no. 280 (replaced on 29 July 2026)"
+      }
+    },
+    "wpg4": {
+      "url": "https://www.gesetze-im-internet.de/wpg/__4.html",
+      "label": {
+        "de": "§ 4 Wärmeplanungsgesetz: Fristen der kommunalen Wärmeplanung",
+        "en": "Section 4 Heat Planning Act: deadlines for municipal heat plans"
+      }
+    },
+    "behg10": {
+      "url": "https://www.gesetze-im-internet.de/behg/__10.html",
+      "label": {
+        "de": "§ 10 BEHG: Verkauf der Emissionszertifikate, Preise und Preiskorridor",
+        "en": "Section 10 Fuel Emissions Trading Act: certificate sales, prices and price corridor"
+      }
+    },
+    "dehst": {
+      "url": "https://www.dehst.de/SharedDocs/downloads/DE/nehs/verkaufsberichte-nehs/2026/2026-08-veraeusserungsbericht.pdf",
+      "label": {
+        "de": "DEHSt: Veräußerungsbericht nEHS August 2026",
+        "en": "German Emissions Trading Authority: national ETS sales report, August 2026"
+      }
+    },
+    "btBehg": {
+      "url": "https://www.bundestag.de/dokumente/textarchiv/2026/kw42-de-brennstoffemissionshandelsgesetz-1223608",
+      "label": {
+        "de": "Deutscher Bundestag, 15.10.2026: Änderung des Brennstoffemissionshandelsgesetzes beschlossen",
+        "en": "German Bundestag, 15 October 2026: amendment to the Fuel Emissions Trading Act passed"
+      }
+    },
+    "btDrs7869": {
+      "url": "https://dserver.bundestag.de/btd/21/078/2107869.pdf",
+      "label": {
+        "de": "Gesetzentwurf BT-Drs. 21/7869: Drittes Gesetz zur Änderung des BEHG",
+        "en": "Government bill, Bundestag paper 21/7869: third amendment to the Fuel Emissions Trading Act"
+      }
+    },
+    "ets2": {
+      "url": "https://climate.ec.europa.eu/areas-action/carbon-markets/ets2-buildings-road-transport-and-additional-sectors_en",
+      "label": {
+        "de": "EU-Kommission: ETS2 für Gebäude und Straßenverkehr",
+        "en": "European Commission: ETS2 for buildings and road transport"
+      }
+    },
+    "ebev": {
+      "url": "https://www.gesetze-im-internet.de/ebev_2030/anlage_2.html",
+      "label": {
+        "de": "EBeV 2030, Anlage 2: Standardwerte für Heizwert und Emissionsfaktor",
+        "en": "EBeV 2030, Annex 2: default calorific values and emission factors"
+      }
+    },
+    "co2kostaufg": {
+      "url": "https://www.gesetze-im-internet.de/co2kostaufg/BJNR215400022.html",
+      "label": {
+        "de": "Kohlendioxidkostenaufteilungsgesetz (CO2KostAufG) mit Stufentabelle",
+        "en": "CO₂ Cost Allocation Act (CO2KostAufG) with its tier table"
+      }
+    },
+    "destatisPreise": {
+      "url": "https://www.destatis.de/DE/Presse/Pressemitteilungen/2026/09/PD26_345_61243.html",
+      "label": {
+        "de": "Destatis, Pressemitteilung Nr. 345 vom 30.09.2026: Gas- und Strompreise im 1. Halbjahr 2026",
+        "en": "Federal Statistical Office, press release no. 345 of 30 September 2026: gas and electricity prices, first half of 2026"
+      }
+    },
+    "destatisVpi": {
+      "url": "https://www.destatis.de/DE/Presse/Pressemitteilungen/2026/10/PD26_364_611.html",
+      "label": {
+        "de": "Destatis, Pressemitteilung Nr. 364 vom 13.10.2026: Verbraucherpreise September 2026",
+        "en": "Federal Statistical Office, press release no. 364 of 13 October 2026: consumer prices, September 2026"
+      }
+    },
+    "wob": {
+      "url": "https://energy.ec.europa.eu/data-and-analysis/weekly-oil-bulletin_en",
+      "label": {
+        "de": "EU-Kommission: Weekly Oil Bulletin, Heizölpreise mit Steuern",
+        "en": "European Commission: Weekly Oil Bulletin, heating oil prices with taxes"
+      }
+    },
+    "bnetza": {
+      "url": "https://data.bundesnetzagentur.de/Bundesnetzagentur/SharedDocs/Mediathek/Monitoringberichte/MonitoringberichtEnergie2025.pdf",
+      "label": {
+        "de": "Bundesnetzagentur und Bundeskartellamt: Monitoringbericht 2025, Heizstrompreise",
+        "en": "Federal Network Agency and Federal Cartel Office: monitoring report 2025, heating electricity prices"
+      }
+    },
+    "iseWpqs": {
+      "url": "https://www.ise.fraunhofer.de/content/dam/ise/de/documents/projekte/WP-QS_Schlussbericht.pdf",
+      "label": {
+        "de": "Fraunhofer ISE: Wärmepumpen in Bestandsgebäuden, Abschlussbericht WP-QS im Bestand",
+        "en": "Fraunhofer ISE: heat pumps in existing buildings, final report of the WP-QS project"
+      }
+    },
+    "dwd": {
+      "url": "https://opendata.dwd.de/climate_environment/CDC/derived_germany/techn/monthly/heating_degreedays/hdd_3807/recent/",
+      "label": {
+        "de": "Deutscher Wetterdienst: Gradtagzahlen nach VDI 3807, Monatswerte",
+        "en": "German Weather Service: heating degree days under VDI 3807, monthly values"
+      }
+    },
+    "heizkostenv9": {
+      "url": "https://www.gesetze-im-internet.de/heizkostenv/__9.html",
+      "label": {
+        "de": "§ 9 Heizkostenverordnung: Heizwerte von Heizöl und Erdgas",
+        "en": "Section 9 Heating Costs Ordinance: calorific values of oil and gas"
+      }
+    },
+    "enwg14a": {
+      "url": "https://www.gesetze-im-internet.de/enwg_2005/__14a.html",
+      "label": {
+        "de": "§ 14a EnWG: steuerbare Verbrauchseinrichtungen",
+        "en": "Section 14a Energy Industry Act (EnWG): controllable devices"
+      }
+    },
+    "enfg22": {
+      "url": "https://www.gesetze-im-internet.de/enfg/__22.html",
+      "label": {
+        "de": "§ 22 EnFG: Umlagen bei Wärmepumpen mit eigenem Zählpunkt",
+        "en": "Section 22 Energy Financing Act (EnFG): levies on heat pumps with their own meter point"
+      }
+    },
+    "avbfernwaermev": {
+      "url": "https://www.gesetze-im-internet.de/avbfernw_rmev/__1a.html",
+      "label": {
+        "de": "§ 1a AVBFernwärmeV: Veröffentlichungspflichten der Versorger",
+        "en": "Section 1a AVBFernwärmeV: what district heating suppliers must publish"
+      }
+    },
+    "bnetzaSteuVE": {
+      "url": "https://www.bundesnetzagentur.de/DE/Vportal/Energie/SteuerbareVBE/artikel.html",
+      "label": {
+        "de": "Bundesnetzagentur: steuerbare Verbrauchseinrichtungen nach § 14a EnWG",
+        "en": "Federal Network Agency: controllable devices under section 14a EnWG"
+      }
+    }
+  },
+  "co2": {
+    "_quelle": "BEHG § 10 (gesetze-im-internet.de, Stand BGBl. 2025 I Nr. 70); DEHSt Veräußerungsbericht August 2026; BT-Drs. 21/7869 und Bundestag 15.10.2026; EBeV 2030 Anlage 2 Teil 4",
+    "preise_fest": [
+      {
+        "jahr": 2021,
+        "preis": 25
+      },
+      {
+        "jahr": 2022,
+        "preis": 30
+      },
+      {
+        "jahr": 2023,
+        "preis": 30
+      },
+      {
+        "jahr": 2024,
+        "preis": 45
+      },
+      {
+        "jahr": 2025,
+        "preis": 55
+      }
+    ],
+    "korridor_2026": {
+      "min": 55,
+      "max": 65
+    },
+    "auktion_2026_durchschnitt": 65,
+    "auktion_2026_bericht": "2026-08",
+    "korridor_2027_beschlossen": {
+      "min": 55,
+      "max": 65,
+      "bundestag": "2026-10-15",
+      "ja": 303,
+      "nein": 210,
+      "enthaltung": 52,
+      "drucksache": "21/7869",
+      "_statut": "vom Bundestag beschlossen, Bundesrat (zweiter Durchgang) und Verkündung im BGBl. ausstehend: kein geltendes Recht"
+    },
+    "ets2_start": 2028,
+    "ets2_verordnung": "(EU) 2026/667",
+    "ets2_schwelle_2020_preise": 45,
+    "oel_dichte_t_je_1000l": 0.845,
+    "oel_hu_gj_je_t": 42.8,
+    "oel_ef_t_je_gj": 0.074,
+    "gas_gj_je_mwh": 3.2508,
+    "gas_ef_t_je_gj": 0.0558,
+    "fluessiggas_hu_gj_je_t": 46.0,
+    "fluessiggas_ef_t_je_gj": 0.0655,
+    "mwst": 0.19,
+    "_gas_basis": "3,2508 GJ je MWh = 3,6 × 0,903: Umrechnung vom Brennwert (Hs, so stehen die kWh auf der Gasrechnung) auf den Heizwert. Eigene Ableitung, im Text der EBeV nicht ausdrücklich genannt."
+  },
+  "aufteilung": {
+    "_quelle": "CO2KostAufG Anlage (zu §§ 5 bis 7), § 8, § 9, §§ 5a bis 5d in der Fassung durch Art. 5 des Gesetzes vom 23.07.2026 (BGBl. 2026 I Nr. 226)",
+    "stufen": [
+      {
+        "ab": 0,
+        "mieter": 1.0
+      },
+      {
+        "ab": 12,
+        "mieter": 0.9
+      },
+      {
+        "ab": 17,
+        "mieter": 0.8
+      },
+      {
+        "ab": 22,
+        "mieter": 0.7
+      },
+      {
+        "ab": 27,
+        "mieter": 0.6
+      },
+      {
+        "ab": 32,
+        "mieter": 0.5
+      },
+      {
+        "ab": 37,
+        "mieter": 0.4
+      },
+      {
+        "ab": 42,
+        "mieter": 0.3
+      },
+      {
+        "ab": 47,
+        "mieter": 0.2
+      },
+      {
+        "ab": 52,
+        "mieter": 0.05
+      }
+    ],
+    "nichtwohn_mieter_max": 0.5,
+    "paragraf9_faktor": 0.5,
+    "neue_fossile_heizung_ab": "2028-01-01",
+    "neue_fossile_heizung_anteil": 0.5,
+    "biobrennstoff_mehrkosten_ab": "2029-01-01",
+    "biobrennstoff_anteil_max": 0.3
+  },
+  "gesetz": {
+    "_quelle": "Gesetz vom 23.07.2026, BGBl. 2026 I Nr. 226 (Gebäudemodernisierungsgesetz), Art. 9; §§ 42, 42a, 43 GModG; WPG § 4; GModG Anlage 10",
+    "gmodg_beschluss_bundestag": "2026-07-10",
+    "gmodg_ausfertigung": "2026-07-23",
+    "gmodg_verkuendet": "2026-07-28",
+    "gmodg_in_kraft": "2026-07-29",
+    "gmodg_bgbl": "BGBl. 2026 I Nr. 226",
+    "kabinett": "2026-05-13",
+    "biotreppe": [
+      {
+        "ab": "2029-01-01",
+        "anteil": 0.1
+      },
+      {
+        "ab": "2030-01-01",
+        "anteil": 0.15
+      },
+      {
+        "ab": "2035-01-01",
+        "anteil": 0.3
+      },
+      {
+        "ab": "2040-01-01",
+        "anteil": 0.6
+      }
+    ],
+    "biotreppe_alt_geg2024": [
+      {
+        "ab": "2029-01-01",
+        "anteil": 0.15
+      },
+      {
+        "ab": "2035-01-01",
+        "anteil": 0.3
+      },
+      {
+        "ab": "2040-01-01",
+        "anteil": 0.6
+      }
+    ],
+    "hybrid_wp_leistung_min": 0.3,
+    "solar_m2_je_m2_bis_2we": 0.04,
+    "solar_m2_je_m2_ab_3we": 0.03,
+    "gruengasquote_gesetz_bis": "2026-12-01",
+    "klimaneutral_ab": 2045,
+    "wpg_gross_frist": "2026-06-30",
+    "wpg_klein_frist": "2028-06-30",
+    "wpg_einwohner_grenze": 100000,
+    "alt_65_prozent": 0.65,
+    "alt_kessel_jahre": 30,
+    "alt_fossil_ende": "2044-12-31",
+    "effizienzklassen": [
+      {
+        "k": "A+",
+        "bis": 30
+      },
+      {
+        "k": "A",
+        "bis": 50
+      },
+      {
+        "k": "B",
+        "bis": 75
+      },
+      {
+        "k": "C",
+        "bis": 100
+      },
+      {
+        "k": "D",
+        "bis": 130
+      },
+      {
+        "k": "E",
+        "bis": 160
+      },
+      {
+        "k": "F",
+        "bis": 200
+      },
+      {
+        "k": "G",
+        "bis": 250
+      },
+      {
+        "k": "H",
+        "bis": null
+      }
+    ]
+  },
+  "klima": {
+    "_quelle": "Deutscher Wetterdienst, Climate Data Center: Gradtagzahlen G20/15 nach VDI 3807, Monatswerte 2021 bis 2025, gemittelt über die genannten Stationen je Land (Quelle: Deutscher Wetterdienst, CC BY 4.0)",
+    "referenz_potsdam": 3236,
+    "jahre": "2021-2025",
+    "laender": [
+      {
+        "land": "Baden-Württemberg",
+        "gt": 2968,
+        "stationen": [
+          "Stuttgart-Echterdingen",
+          "Mannheim",
+          "Freiburg/Breisgau"
+        ]
+      },
+      {
+        "land": "Bayern",
+        "gt": 3318,
+        "stationen": [
+          "Muenchen-Stadt",
+          "Nuernberg",
+          "Augsburg",
+          "Wuerzburg"
+        ]
+      },
+      {
+        "land": "Berlin",
+        "gt": 3148,
+        "stationen": [
+          "Berlin-Tempelhof",
+          "Berlin-Dahlem (Met.Inst)"
+        ]
+      },
+      {
+        "land": "Brandenburg",
+        "gt": 3221,
+        "stationen": [
+          "Potsdam",
+          "Cottbus"
+        ]
+      },
+      {
+        "land": "Bremen",
+        "gt": 3177,
+        "stationen": [
+          "Bremen"
+        ]
+      },
+      {
+        "land": "Hamburg",
+        "gt": 3251,
+        "stationen": [
+          "Hamburg-Fuhlsbuettel"
+        ]
+      },
+      {
+        "land": "Hessen",
+        "gt": 2917,
+        "stationen": [
+          "Frankfurt/Main"
+        ]
+      },
+      {
+        "land": "Mecklenburg-Vorpommern",
+        "gt": 3280,
+        "stationen": [
+          "Schwerin",
+          "Rostock-Warnemuende",
+          "Greifswald"
+        ]
+      },
+      {
+        "land": "Niedersachsen",
+        "gt": 3160,
+        "stationen": [
+          "Hannover-Langenhagen",
+          "Braunschweig"
+        ]
+      },
+      {
+        "land": "Nordrhein-Westfalen",
+        "gt": 2929,
+        "stationen": [
+          "Duesseldorf",
+          "Koeln/Bonn",
+          "Essen-Bredeney",
+          "Muenster/Osnabrueck"
+        ]
+      },
+      {
+        "land": "Rheinland-Pfalz",
+        "gt": 3081,
+        "stationen": [
+          "Mainz-Lerchenberg (Zdf)",
+          "Trier-Petrisberg",
+          "Kaiserslautern"
+        ]
+      },
+      {
+        "land": "Saarland",
+        "gt": 3192,
+        "stationen": [
+          "Saarbruecken-Ensheim"
+        ]
+      },
+      {
+        "land": "Sachsen",
+        "gt": 3356,
+        "stationen": [
+          "Dresden-Klotzsche",
+          "Leipzig/Halle",
+          "Chemnitz"
+        ]
+      },
+      {
+        "land": "Sachsen-Anhalt",
+        "gt": 3076,
+        "stationen": [
+          "Magdeburg"
+        ]
+      },
+      {
+        "land": "Schleswig-Holstein",
+        "gt": 3348,
+        "stationen": [
+          "Kiel-Holtenau",
+          "Luebeck-Blankensee",
+          "Schleswig"
+        ]
+      },
+      {
+        "land": "Thüringen",
+        "gt": 3475,
+        "stationen": [
+          "Erfurt-Weimar",
+          "Gera-Leumnitz"
+        ]
+      }
+    ]
+  },
+  "technik": {
+    "_quelle": "Fraunhofer ISE, Abschlussbericht „WP-QS im Bestand“ (Kurzfassung); Richtlinie BEG EM, TMA Nr. 3.4.4 bis 3.4.6",
+    "jaz_luft_messung": 3.4,
+    "jaz_luft_min": 2.6,
+    "jaz_luft_max": 4.9,
+    "jaz_sole_messung": 4.3,
+    "jaz_sole_min": 3.6,
+    "jaz_sole_max": 5.4,
+    "jaz_foerder_min": 3.0,
+    "anteil_warmwasser": 0.19,
+    "wp_laerm_db_unter_eu": 10,
+    "natuerliches_kaeltemittel_pflicht_ab": "2028-01-01"
+  },
+  "steuer35c": {
+    "_quelle": "§ 35c EStG, § 52 Abs. 35a EStG",
+    "jahr1": 0.07,
+    "jahr2": 0.07,
+    "jahr3": 0.06,
+    "max1": 14000,
+    "max2": 14000,
+    "max3": 12000,
+    "max_gesamt": 40000,
+    "energieberater": 0.5,
+    "objekt_mindestalter": 10,
+    "ende": "2029-12-31"
+  },
+  "bafa": {
+    "_quelle": "BAFA Heizungsoptimierung; Richtlinie BEG EM Nr. 8.3, 8.4.1 d, 8.4.2, 8.4.7",
+    "optimierung": 0.15,
+    "staubminderung": 0.5,
+    "isfp_bonus": 0.05,
+    "hoechst_erste_we": 30000,
+    "hoechst_erste_we_isfp": 60000,
+    "fachplanung": 0.5,
+    "optimierung_max_we": 5,
+    "optimierung_alter_min": 2,
+    "optimierung_fossil_alter_max": 20
+  },
+  "preise": {
+    "_quelle": "Destatis PM Nr. 345 vom 30.09.2026 (Strom und Gas private Haushalte, 1. Halbjahr 2026); EU-Kommission Weekly Oil Bulletin (Heizöl mit Steuern, Deutschland); Bundesnetzagentur Monitoringbericht 2025, Tabelle 45 (Heizstrom am 01.04.2025)",
+    "strom_haushalt_ct": 37.97,
+    "strom_haushalt_ueber_15000_ct": 30.55,
+    "strom_stand": "1. Halbjahr 2026",
+    "gas_ct": 11.58,
+    "gas_ueber_200gj_ct": 10.92,
+    "gas_unter_20gj_ct": 15.17,
+    "gas_stand": "1. Halbjahr 2026",
+    "oel_eur_100l_aktuell": 169.81,
+    "oel_stand_aktuell": "2026-10-12",
+    "oel_eur_100l_12monate": 118.68,
+    "oel_eur_100l_2025": 95.9,
+    "wp_strom_getrennt_ct": 27.44,
+    "wp_strom_gemeinsam_ct": 31.7,
+    "nachtspeicher_ct": 28.47,
+    "wp_strom_stand": "2025-04-01",
+    "heizoel_vpi_vorjahr": 0.749,
+    "heizoel_vpi_monat": "2026-09"
+  },
+  "annahmen": {
+    "_lisezmoi": "Rechenannahmen ohne amtlichen Wert: im Rechner sichtbar und änderbar.",
+    "nutzungsgrad_kessel": 0.866,
+    "_nutzungsgrad_quelle": "Fraunhofer ISE, WP-QS im Bestand (Annahme nach Jagnow und Wolff 2004)",
+    "nutzungsgrad_kessel_alt": 0.8,
+    "klasse_mitte": {
+      "A+": 25,
+      "A": 40,
+      "B": 62.5,
+      "C": 87.5,
+      "D": 115,
+      "E": 145,
+      "F": 180,
+      "G": 225,
+      "H": 275
+    }
+  }
+}

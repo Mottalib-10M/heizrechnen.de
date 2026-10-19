@@ -1,0 +1,145 @@
+---
+/**
+ * Startseite (Säule, RECETTE §5), eigene Trame: Rechtsstand mit Datum, sofort der Förderrechner (ohne Scrollen
+ * sichtbar), der zitierbare Absatz (eingeklappt), die Stichtage der Richtlinie als Zuschussbalken für zwei Haushalte,
+ * die Dreiteilung „gilt / beschlossen / angekündigt“, eine Tabelle der 16 Länder (Heizkosten Wärmepumpe und Gas),
+ * eine Randspalte mit verbreiteten veralteten Angaben, dann der Text mit Mini-Rechnern und die FAQ.
+ */
+import PageLayout from '../layouts/PageLayout.astro';
+import FoerderRechner from './calc/FoerderRechner';
+import MiniSim from './calc/MiniSim';
+import Clamp from './Clamp.astro';
+import { HOME } from '../content/home';
+import { route, ROUTES, type Locale } from '../i18n/routes';
+import { label } from '../i18n/nav';
+import { helpers } from '../lib/helpers';
+import { P, type SourceKey } from '../lib/engine/params';
+import { foerderung, stichtage, hoechstbetrag, type FoerderEingabe } from '../lib/engine/foerderung';
+import { nutzwaerme, laufend, gradtage } from '../lib/engine/heizkosten';
+import { LAND_EN } from './calc/opts';
+import { formatMoney, formatPercent, displayDate } from '../lib/format';
+import { faqSchema, organizationSchema, websiteSchema, webPageSchema, webApplicationSchema } from '../lib/seo';
+import { LAST_UPDATED, LANG_TAGS } from '../data/site-config';
+interface Props { lang: Locale }
+const { lang } = Astro.props;
+const de = lang === 'de';
+const x = HOME[lang];
+const h = helpers(lang);
+const path = route('home', lang);
+const parts = x.body(h).split(/<!--mini:([A-Za-z0-9_]+)-->/);
+const faqs = x.faqs(h);
+const keys: SourceKey[] = ['begem2026', 'merkblatt458', 'kfw458', 'bmweFaq', 'gmodgBgbl', 'gmodg43', 'behg10', 'btBehg', 'destatisPreise', 'dwd', 'iseWpqs'];
+const sources = keys.map((k) => ({ name: P.sources[k].label[lang], url: P.sources[k].url }));
+const jsonLd = [websiteSchema(lang), organizationSchema(lang), webPageSchema({ name: x.h1, description: x.description, path, lang }), webApplicationSchema({ name: x.h1, description: x.description, path, lang }), faqSchema(faqs, lang)];
+const $ = (n: number) => formatMoney(n, 0, lang);
+const pc = (n: number) => formatPercent(n, 0, lang);
+const dt = (iso: string) => displayDate(iso, LANG_TAGS[lang]);
+const r = (id: string) => (ROUTES.some((x) => x.id === id) ? route(id, lang) : undefined);
+const F = P.foerderung;
+
+// Stichtage: zwei Haushalte, gleicher Einbau (Ölheizung, 32.000 €), unterschiedliches Einkommen.
+const basis: FoerderEingabe = { antrag: P.retrieved_at, gebaeude: 'efh', einheiten: 1, kosten: 32000, selbstnutzer: true, alt: 'oel', altJahre: 25, neu: 'wp', wpEU: true, zve: 80000, kind: false };
+const termine = [P.retrieved_at, ...stichtage().filter((s) => s > P.retrieved_at && s <= '2028-08-01')];
+const haushalte = [
+  { name: de ? 'Einkommen 80.000 €' : 'Income €80,000', e: basis },
+  { name: de ? 'Einkommen 35.000 €' : 'Income €35,000', e: { ...basis, zve: 35000 } },
+];
+const zeilen = termine.map((t) => ({ t, cap: hoechstbetrag(t, 1), w: haushalte.map((hh) => foerderung({ ...hh.e, antrag: t })) }));
+const maxZ = Math.max(...zeilen.flatMap((z) => z.w.map((w) => w.zuschuss)));
+
+// Heizkosten der 16 Länder: 140 m², Klasse E, Wärmepumpe gegen Gas.
+const laender = P.klima.laender.map((l) => {
+  const q = nutzwaerme({ flaeche: 140, klasse: 'E', land: l.land });
+  return { land: de ? l.land : LAND_EN[l.land] ?? l.land, gt: gradtage(l.land), wp: laufend('wp_luft', q)!.kosten, gas: laufend('gas', q)!.kosten, oel: laufend('oel', q)!.kosten };
+}).sort((a, b) => a.wp - b.wp);
+const C = P.co2;
+---
+<PageLayout title={x.title} description={x.description} lang={lang} jsonLd={jsonLd} faqs={faqs} sources={sources}>
+  <header class="mb-4">
+    <p class="text-sm font-semibold uppercase tracking-wide text-accent-800">{de ? `Richtlinie vom 17. August 2026 · Gebäudemodernisierungsgesetz seit ${dt(P.gesetz.gmodg_in_kraft)}` : `Guideline of 17 August 2026 · Building Modernisation Act since ${dt(P.gesetz.gmodg_in_kraft)}`}</p>
+    <h1 class="mt-1 text-3xl font-bold text-navy-900 md:text-[2.5rem] md:leading-tight">{x.h1}</h1>
+    <p class="mt-2 text-lg text-navy-700">{x.intro}</p>
+    <p class="mt-2 text-sm text-navy-700">
+      <a class="underline" href={route('method', lang)}>{label('method', lang)}</a> · <a class="underline" href={route('about', lang)}>{label('about', lang)}</a>
+    </p>
+  </header>
+  <section id="rechner" data-outil aria-label={de ? 'Förderrechner' : 'Grant calculator'}>
+    <FoerderRechner client:load lang={lang} methodHref={route('method', lang)} />
+  </section>
+  <section class="mt-8" aria-labelledby="kurz">
+    <h2 id="kurz" class="sr-only">{de ? 'Kurz gesagt' : 'In short'}</h2>
+    <Clamp text={x.resume(h)} lang={lang} id="clamp-home" sentences={2} />
+    <p class="mt-4 border-l-4 border-accent-600 pl-4 text-navy-800">{de
+      ? 'Was Heizwechsel anders macht: Die Seite rechnet für einen bestimmten Haushalt den Zuschuss genau zum Tag des Antrags, mit dem Klimabonus von 16 % bis zum 31. Januar 2027 und danach 12, 8 und 4 %, mit dem Höchstbetrag, der von 28.000 € an halbjährlich sinkt, dazu die Heizkosten im eigenen Bundesland und die CO₂-Kosten. Jede Regel trägt Quelle und Datum, und es gibt kein Angebotsformular.'
+      : 'What Heizwechsel does differently: it works out, for one specific household, the grant on the exact day of the application, with the 16% climate bonus until 31 January 2027 and then 12, 8 and 4%, with the cost cap that falls every six months from €28,000, plus running costs in your own state and the CO₂ cost. Every rule carries its source and date, and there is no quote form.'}</p>
+  </section>
+  <section class="mt-10 border-t border-navy-200 pt-6" aria-labelledby="stichtage" data-chrome>
+    <h2 id="stichtage" class="text-2xl font-bold text-navy-900">{de ? 'Derselbe Einbau, sechs Antragsdaten' : 'The same installation, six application dates'}</h2>
+    <p class="mt-2 text-navy-700">{de ? 'Ölheizung ersetzt, Wärmepumpe für 32.000 €, Haus selbst bewohnt. Dunkler Balken: Einkommen 80.000 €, heller Balken: 35.000 €.' : 'Oil boiler replaced, heat pump for €32,000, owner-occupied. Dark bar: income €80,000, light bar: €35,000.'}</p>
+    <ol class="mt-4 space-y-3">
+      {zeilen.map((z) => (
+        <li class="grid grid-cols-[7rem_1fr] items-center gap-3 text-sm sm:grid-cols-[9rem_1fr_9rem]">
+          <span class="font-semibold text-navy-900">{dt(z.t)}</span>
+          <span class="space-y-1">
+            {z.w.map((w, i) => <span class="frist-bar block h-3 rounded"><span class={`${i === 0 ? 'frist-fill' : 'frist-fill-weg'} block h-3 rounded`} style={`width:${(w.zuschuss / maxZ) * 100}%`}></span></span>)}
+          </span>
+          <span class="tabular-nums col-start-2 text-navy-800 sm:col-start-3 sm:text-right">{$(z.w[0].zuschuss)} · {$(z.w[1].zuschuss)}</span>
+        </li>
+      ))}
+    </ol>
+    <p class="mt-3 text-xs text-navy-600">{de ? `Höchstbetrag der ersten Wohnung: ${$(zeilen[0].cap)} bis ${$(zeilen[zeilen.length - 1].cap)}. Ab dem 1. Quartal 2027 kann die Grundförderung für Wärmepumpen ohne EU-Herkunft auf ${pc(F.q1_2027.wp_grund)} sinken; hier ist eine Wärmepumpe aus der EU angenommen.` : `Cap for the first home: ${$(zeilen[0].cap)} to ${$(zeilen[zeilen.length - 1].cap)}. From Q1 2027 the basic grant for heat pumps not made in the EU may drop to ${pc(F.q1_2027.wp_grund)}; an EU-made unit is assumed here.`}</p>
+  </section>
+  <section class="mt-10 border-t border-navy-200 pt-6" aria-labelledby="recht" data-chrome>
+    <h2 id="recht" class="text-2xl font-bold text-navy-900">{de ? 'Gilt, beschlossen, angekündigt' : 'In force, passed, announced'}</h2>
+    <div class="mt-4 grid gap-4 md:grid-cols-3">
+      <article class="rounded-lg border border-navy-300 bg-white p-4">
+        <h3 class="font-semibold text-navy-900">{de ? 'Gilt heute' : 'In force today'}</h3>
+        <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-navy-800">
+          <li>{de ? `Grundförderung ${pc(F.grund)}, Klimabonus ${pc(F.kgb_stufen[0].satz)}, Einkommensbonus bis ${pc(F.einkommen_stufen[0].bonus)}` : `Basic grant ${pc(F.grund)}, climate bonus ${pc(F.kgb_stufen[0].satz)}, income bonus up to ${pc(F.einkommen_stufen[0].bonus)}`}</li>
+          <li>{de ? `Deckel ${pc(F.deckel_standard)}, bis ${$(F.deckel_niedrig_zve)} Einkommen ${pc(F.deckel_niedrig)}` : `Ceiling ${pc(F.deckel_standard)}, ${pc(F.deckel_niedrig)} up to ${$(F.deckel_niedrig_zve)} income`}</li>
+          <li>{de ? 'Keine 65-Prozent-Regel, keine Austauschpflicht nach 30 Jahren' : 'No 65 percent rule, no duty to replace after 30 years'}</li>
+          <li>{de ? `CO₂-Preis 2026: ${C.korridor_2026.min} bis ${C.korridor_2026.max} € je Tonne` : `CO₂ price 2026: €${C.korridor_2026.min} to €${C.korridor_2026.max} per tonne`}</li>
+        </ul>
+      </article>
+      <article class="rounded-lg border border-navy-300 bg-white p-4">
+        <h3 class="font-semibold text-navy-900">{de ? 'Beschlossen, mit festem Datum' : 'Passed, with a fixed date'}</h3>
+        <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-navy-800">
+          <li>{de ? `Klimabonus ${pc(F.kgb_stufen[1].satz)} ab 01.02.2027, ${pc(F.kgb_stufen[2].satz)} ab 01.08.2027, ${pc(F.kgb_stufen[3].satz)} ab 01.02.2028` : `Climate bonus ${pc(F.kgb_stufen[1].satz)} from 1 Feb 2027, ${pc(F.kgb_stufen[2].satz)} from 1 Aug 2027, ${pc(F.kgb_stufen[3].satz)} from 1 Feb 2028`}</li>
+          <li>{de ? `Bioanteil neuer Gas- und Ölheizungen ab 2029: ${pc(P.gesetz.biotreppe[0].anteil)}` : `Bio share for new gas and oil boilers from 2029: ${pc(P.gesetz.biotreppe[0].anteil)}`}</li>
+          <li>{de ? `CO₂-Korridor 2027 vom Bundestag beschlossen (${dt(C.korridor_2027_beschlossen.bundestag)}), noch nicht verkündet` : `2027 CO₂ corridor passed by the Bundestag (${dt(C.korridor_2027_beschlossen.bundestag)}), not yet promulgated`}</li>
+        </ul>
+      </article>
+      <article class="rounded-lg border border-amber-300 bg-amber-50 p-4">
+        <h3 class="font-semibold text-navy-900">{de ? 'Angekündigt, Starttag offen' : 'Announced, start date open'}</h3>
+        <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-navy-800">
+          <li>{de ? `Wärmepumpe ${pc(F.q1_2027.wp_grund)} plus ${pc(F.q1_2027.wertschoepfung)} bei EU-Herkunft, „ab dem ersten Quartal 2027“` : `Heat pump ${pc(F.q1_2027.wp_grund)} plus ${pc(F.q1_2027.wertschoepfung)} if made in the EU, “from the first quarter of 2027”`}</li>
+          <li>{de ? `Grüngasquote: Gesetzentwurf bis ${dt(P.gesetz.gruengasquote_gesetz_bis)} angekündigt` : `Green gas quota: bill announced by ${dt(P.gesetz.gruengasquote_gesetz_bis)}`}</li>
+          <li>{de ? `Europäischer CO₂-Handel ETS2 ab ${C.ets2_start}, ohne festen Preis` : `EU ETS2 from ${C.ets2_start}, without a fixed price`}</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+  <section class="mt-10 border-t border-navy-200 pt-6" aria-labelledby="laender" data-chrome>
+    <h2 id="laender" class="text-2xl font-bold text-navy-900">{de ? 'Heizkosten im Jahr, Land für Land' : 'Heating cost a year, state by state'}</h2>
+    <p class="mt-2 text-navy-700">{de ? '140 m², Effizienzklasse E, Gradtagzahl des Deutschen Wetterdienstes 2021 bis 2025, Preise 2026.' : '140 m², efficiency class E, German Weather Service degree days 2021 to 2025, 2026 prices.'}</p>
+    <div class="mt-4 overflow-x-auto">
+      <table class="journal w-full text-sm">
+        <thead><tr><th scope="col" class="px-2 py-2 text-left">{de ? 'Land' : 'State'}</th><th scope="col" class="px-2 py-2 text-right">{de ? 'Gradtage' : 'Degree days'}</th><th scope="col" class="px-2 py-2 text-right">{de ? 'Wärmepumpe' : 'Heat pump'}</th><th scope="col" class="px-2 py-2 text-right">Gas</th><th scope="col" class="px-2 py-2 text-right">{de ? 'Heizöl' : 'Oil'}</th></tr></thead>
+        <tbody>{laender.map((l) => <tr class="border-b border-navy-100"><th scope="row" class="px-2 py-1.5 text-left font-normal text-navy-900">{l.land}</th><td class="tabular-nums px-2 py-1.5 text-right">{h.num(l.gt)}</td><td class="tabular-nums px-2 py-1.5 text-right font-semibold">{$(l.wp)}</td><td class="tabular-nums px-2 py-1.5 text-right">{$(l.gas)}</td><td class="tabular-nums px-2 py-1.5 text-right">{$(l.oel)}</td></tr>)}</tbody>
+      </table>
+    </div>
+    {r('heizkosten-bundesland') && <a class="mt-3 inline-block text-sm font-medium text-accent-800 underline" href={r('heizkosten-bundesland')}>{de ? 'Wie das Klima die Rechnung verändert' : 'How the climate changes the bill'}</a>}
+  </section>
+  <aside class="mt-10 rounded-lg border border-navy-200 bg-navy-50 p-4" aria-labelledby="veraltet" data-chrome>
+    <h2 id="veraltet" class="text-lg font-bold text-navy-900">{de ? 'Diese Zahlen sind seit dem 21. Juli 2026 überholt' : 'These figures have been out of date since 21 July 2026'}</h2>
+    <ul class="mt-2 list-disc space-y-1 pl-5 text-sm text-navy-800">
+      <li>{de ? `20 % Klimageschwindigkeitsbonus: jetzt ${pc(F.kgb_stufen[0].satz)}` : `20% climate speed bonus: now ${pc(F.kgb_stufen[0].satz)}`}</li>
+      <li>{de ? `30.000 € förderfähige Kosten und 21.000 € Höchstzuschuss: jetzt ${$(F.hoechst_erste_we[0].betrag)} und bis ${$(F.hoechst_erste_we[0].betrag * F.deckel_niedrig)}` : `€30,000 eligible costs and €21,000 maximum grant: now ${$(F.hoechst_erste_we[0].betrag)} and up to ${$(F.hoechst_erste_we[0].betrag * F.deckel_niedrig)}`}</li>
+      <li>{de ? '5 % Effizienzbonus für Erdwärme oder natürliches Kältemittel: gestrichen' : '5% efficiency bonus for ground source or natural refrigerants: abolished'}</li>
+      <li>{de ? `70 % als absolute Obergrenze: für Einkommen bis ${$(F.deckel_niedrig_zve)} gelten ${pc(F.deckel_niedrig)}` : `70% as the absolute ceiling: ${pc(F.deckel_niedrig)} applies for incomes up to ${$(F.deckel_niedrig_zve)}`}</li>
+    </ul>
+  </aside>
+  <div class="prose prose-slate mt-10 max-w-none border-t border-navy-200 pt-4">
+    {parts.map((p, i) => i % 2 === 0 ? <Fragment set:html={p} /> : <MiniSim client:load kind={p} lang={lang} href={r('co2-steuer')} />)}
+  </div>
+</PageLayout>

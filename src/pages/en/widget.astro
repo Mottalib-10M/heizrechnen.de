@@ -1,0 +1,26 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { SITE_URL } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { breadcrumbSchema } from '../../lib/seo';
+const lang = 'en';
+const code = `<iframe src="${SITE_URL}/embed/foerderrechner/?lang=en" title="German heating grant by application date" width="100%" height="1150" style="border:0;max-width:1100px" loading="lazy"></iframe>`;
+const code2 = `<iframe src="${SITE_URL}/embed/heizkosten/?lang=en" title="Heating costs compared" width="100%" height="1000" style="border:0;max-width:1100px" loading="lazy"></iframe>`;
+---
+<PageLayout title="Embed a free heating grant calculator for Germany" description="Embed the German heating grant calculator by application date or the running cost comparison by state on your site free of charge with an iframe: copy the code, no cookies." lang={lang} noindex={true} jsonLd={[breadcrumbSchema([{ name: 'Home', path: route('home', lang) }, { name: 'Widget', path: route('widget', lang) }])]} breadcrumbs={[{ label: 'Widget' }]} showAuthor={false}>
+  <header class="mb-6">
+    <h1 class="text-3xl font-bold text-navy-900 md:text-4xl">Embed a heating calculator</h1>
+    <p class="mt-3 text-lg text-navy-700">For energy advisers, municipalities, associations and newsrooms: copy once, and rates and deadlines update by themselves.</p>
+  </header>
+  <div class="prose prose-slate max-w-none">
+    <h2>Heating grant by application date</h2>
+    <pre class="overflow-x-auto rounded-lg bg-navy-900 p-4 text-sm text-white"><code>{code}</code></pre>
+    <h2>Heating costs compared</h2>
+    <pre class="overflow-x-auto rounded-lg bg-navy-900 p-4 text-sm text-white"><code>{code2}</code></pre>
+    <p>Terms: the source link under the calculator stays visible, the calculator is not altered and is provided without warranty. Remove <code>?lang=en</code> for the German version. What your readers type stays on their device.</p>
+    <p>Questions via the <a href={route('contact', lang)}>contact page</a>.</p>
+  </div>
+  <div class="mt-8 overflow-hidden rounded-xl border border-navy-200">
+    <iframe src="/embed/foerderrechner/?lang=en" title="German heating grant by application date" width="100%" height="1150" style="border:0" loading="lazy"></iframe>
+  </div>
+</PageLayout>

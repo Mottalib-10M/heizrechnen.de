@@ -1,0 +1,28 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+import { YEAR, LAST_UPDATED, AUTHOR_NAME, CONTACT_EMAIL, AUTHOR_ROLE, SITE_NAMES, LANG_TAGS } from '../../data/site-config';
+import { route } from '../../i18n/routes';
+import { personSchema, organizationSchema, breadcrumbSchema, profilePageSchema } from '../../lib/seo';
+import { displayDate } from '../../lib/format';
+const lang = 'de';
+---
+<PageLayout title="Heizwechsel: wer die Rechner zur Heizungsförderung macht" description="Wer hinter den Rechnern zu Heizungsförderung, Heizkosten, Wärmepumpe und CO₂-Preis steht, warum es sie gibt, wie jede Zahl geprüft wird und was wir nicht tun." lang={lang} jsonLd={[personSchema(lang), organizationSchema(lang), profilePageSchema({ path: route('about', lang), lang }), breadcrumbSchema([{ name: 'Start', path: route('home', lang) }, { name: 'Über uns', path: route('about', lang) }])]} breadcrumbs={[{ label: 'Über uns' }]}>
+  <header class="mb-6"><h1 class="text-3xl font-bold text-navy-900 md:text-4xl">Über {SITE_NAMES.de}</h1></header>
+  <div class="prose prose-slate max-w-none">
+    <div class="not-prose mb-6"><p class="text-lg font-semibold text-navy-900">{AUTHOR_NAME}</p><p class="text-navy-700">{AUTHOR_ROLE[lang]}</p></div>
+    <p>{SITE_NAMES.de} wird von Radif Partners herausgegeben, einem unabhängigen Herausgeber von Rechnern. Der Anlass war das Lesen der Suchergebnisse zur Heizungsförderung im Oktober 2026, drei Monate nach der Reform vom 21. Juli: Gut platzierte Seiten nannten noch einen Klimabonus von 20 Prozent, 30.000 € förderfähige Kosten, einen Effizienzbonus, den es nicht mehr gibt, oder 70 Prozent als Obergrenze für alle. Andere waren richtig, wollten vor dem Ergebnis aber eine Telefonnummer für ein Angebot.</p>
+    <h2>Was diese Seite besser machen will als der erste Treffer</h2>
+    <p>Sie rechnet für einen bestimmten Haushalt den Zuschuss genau zum Tag des Antrags: mit dem Klimageschwindigkeitsbonus von 16 Prozent bis zum 31. Januar 2027 und danach 12, 8 und 4 Prozent, mit dem Höchstbetrag, der von 28.000 € an jedes halbe Jahr sinkt, mit Einkommensbonus und dem richtigen Deckel von 70 oder 80 Prozent. Dazu die Heizkosten vorher und nachher mit dem Klima des eigenen Bundeslandes und die CO₂-Kosten. Jede Regel trägt Quelle und Datum. Es gibt kein Angebotsformular, keine Anmeldung und keinen Rückruf.</p>
+    <h2>Wie geprüft wird</h2>
+    <p>Grundlage sind die Förderrichtlinie im Bundesanzeiger, das Merkblatt und die Produktseite der Förderbank, das Gebäudemodernisierungsgesetz im Bundesgesetzblatt, das Brennstoffemissionshandelsgesetz und das Kohlendioxidkostenaufteilungsgesetz auf gesetze-im-internet.de, Preise von Destatis, Bundesnetzagentur und EU-Kommission, Gradtagzahlen des Deutschen Wetterdienstes und Messungen von Fraunhofer ISE. Die Rechenbeispiele der Förderbank laufen als automatische Tests; ein abweichender Wert stoppt die Veröffentlichung. Wie jede Zahl entsteht, steht unter <a href={route('method', lang)}>So rechnen wir</a>.</p>
+    <h2>Was wir nicht sind</h2>
+    <p>Nicht die Förderbank und nicht das BAFA, mit keiner Behörde verbunden, kein Energieberater, kein Heizungsbauer, kein Hersteller, kein Vergleichsportal. Wir beraten nicht im Einzelfall und vermitteln nichts. Verbindlich ist allein die Zusage der Förderbank.</p>
+    <h2>Finanzierung und Ihre Daten</h2>
+    <p>Die Rechner sind kostenlos. Einkommen, Kosten und Verbrauch, die Sie eintippen, bleiben in Ihrem Browser. Falls die Seite Werbung zeigt, dann nie über einem Rechner und nie im Ergebnis.</p>
+    <h2>Auf Englisch</h2>
+    <p>Jede Seite gibt es auf Englisch, geschrieben für Menschen aus dem Ausland, die in Deutschland ein Haus oder eine Wohnung besitzen: Begriffe wie zu versteuerndes Einkommen, Lieferungs- und Leistungsvertrag oder Gradtagzahl werden erklärt.</p>
+    <h2>Kontakt</h2>
+    <p>Ein Wert stimmt nicht, Ihre Zusage weicht ab, ein Fall fehlt? Schreiben Sie an <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>. Siehe auch die <a href={route('editorial', lang)}>Redaktionsgrundsätze</a> und das <a href={route('terms', lang)}>Impressum</a>.</p>
+    <p class="text-sm text-navy-600">Rechtsstand {YEAR}, geprüft am <time datetime={LAST_UPDATED}>{displayDate(LAST_UPDATED, LANG_TAGS[lang])}</time>.</p>
+  </div>
+</PageLayout>
