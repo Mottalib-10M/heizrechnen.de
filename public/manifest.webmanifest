@@ -1,6 +1,6 @@
 {
- "name": "Heizwechsel",
- "short_name": "Heizwechsel",
+ "name": "Heizrechnen",
+ "short_name": "Heizrechnen",
  "description": "Heizungsförderung 2026 nachgerechnet: Zuschuss nach Antragsdatum und Einkommen, Restkosten, Heizkosten je Bundesland, CO₂-Aufschlag und Amortisation.",
  "start_url": "/de/",
  "display": "standalone",

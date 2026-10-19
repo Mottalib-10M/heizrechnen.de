@@ -1,6 +1,6 @@
 /** Configuration centrale du site (générée par new-site.py). */
-export const SITE_URL = "https://de-heizung.example";
-export const SITE_NAMES: Record<string, string> = {"de": "Heizwechsel", "en": "Heizwechsel"};
+export const SITE_URL = "https://heizrechnen.de";
+export const SITE_NAMES: Record<string, string> = {"de": "Heizrechnen", "en": "Heizrechnen"};
 export const LANG_TAGS: Record<string, string> = {"de": "de-DE", "en": "en-DE"};
 export const OG_LOCALES: Record<string, string> = {"de": "de_DE", "en": "en_GB"};
 export const LOCALE_TAG = 'de-DE';
@@ -17,7 +17,7 @@ export const AUTHOR_DESC: Record<string, string> = {"de": "Radif Partners rechne
  *  themes reellement traites par le site, pas une liste de mots-cles : un sujet
  *  declare ici sans page qui le couvre est une declaration fausse. */
 export const KNOWS_ABOUT: Record<string, string[]> = {"de": ["Heizungsförderung für Privatpersonen (Bundesförderung für effiziente Gebäude, Einzelmaßnahmen)", "Gebäudeenergiegesetz und Gebäudemodernisierungsgesetz", "CO₂-Preis nach dem Brennstoffemissionshandelsgesetz", "Kohlendioxidkostenaufteilungsgesetz"], "en": ["Germany's heating grant for private owners (federal efficient buildings funding, individual measures)", "Building Energy Act and the Building Modernisation Act in force since 29 July 2026", "CO₂ price under the Fuel Emissions Trading Act", "CO₂ cost split between landlord and tenant"]};
-export const CONTACT_EMAIL = "kontakt@de-heizung.example";
+export const CONTACT_EMAIL = "kontakt@heizrechnen.de";
 export const THEME_COLOR = '#9A3412';
 export const LOGO_SYMBOL = 'WP';
 export const BING_VERIFY_CODE = '';

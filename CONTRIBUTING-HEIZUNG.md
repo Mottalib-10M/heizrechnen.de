@@ -1,4 +1,4 @@
-# Seiten von Heizwechsel (de-heizung) schreiben und erweitern
+# Seiten von Heizrechnen (de-heizung) schreiben und erweitern
 
 Notice pour les agents qui prolongent le site (aide au remplacement du chauffage en Allemagne : KfW 458, GModG, prix du CO₂, coûts de chauffage par Land ; de + en).
 À lire avec `~/Documents/GitHub/RECETTE-SITE.md` (§0, §3, §5, §6, §7, §9.3, §11, §17.4, §21, §26) et **`research/fakten.md`** (seuls faits autorisés).

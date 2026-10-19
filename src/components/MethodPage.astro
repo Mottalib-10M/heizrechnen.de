@@ -15,7 +15,7 @@ const n = (x: number, d = 0) => formatNumber(x, d, lang);
 const pc = (x: number, d = 0) => formatPercent(x, d, lang);
 const dt = (iso: string) => displayDate(iso, LANG_TAGS[lang]);
 const F = P.foerderung, C = P.co2, T = P.technik, PR = P.preise;
-const title = de ? 'Heizungsförderung berechnen 2026: So rechnet Heizwechsel' : 'Heating Grant Calculation 2026: How Heizwechsel Works';
+const title = de ? 'Heizungsförderung berechnen 2026: So rechnet Heizrechnen' : 'Heating Grant Calculation 2026: How Heizrechnen Works';
 const description = de ? 'Heizungsförderung 2026 offengelegt: Sätze und Stichtage der Richtlinie, Höchstbeträge, Gradtage, Energiepreise, CO₂-Faktoren, Tests und Grenzen der Rechner.' : 'Heating grant calculation 2026 in the open: guideline rates and dates, cost caps, degree days, energy prices, CO₂ factors, tests and each tool’s limits.';
 const h1 = de ? 'So rechnen wir' : 'How we calculate';
 const path = route('method', lang);

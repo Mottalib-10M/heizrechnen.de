@@ -18,9 +18,9 @@ const de = route('home', 'de'), en = route('home', 'en');
   <body class="bg-white p-2 text-navy-900">
     <div id="de-view"><FoerderRechner client:load lang="de" /></div>
     <div id="en-view" hidden><FoerderRechner client:load lang="en" /></div>
-    <p class="mt-2 text-center text-xs text-navy-600"><a id="credit" href={`${SITE_URL}${de}`} data-en={`${SITE_URL}${en}`} target="_blank" rel="noopener" class="underline">Heizungsförderung 2026 · Heizwechsel</a></p>
+    <p class="mt-2 text-center text-xs text-navy-600"><a id="credit" href={`${SITE_URL}${de}`} data-en={`${SITE_URL}${en}`} target="_blank" rel="noopener" class="underline">Heizungsförderung 2026 · Heizrechnen</a></p>
     <script is:inline>
-      if (new URLSearchParams(location.search).get('lang') === 'en') { document.getElementById('de-view').hidden = true; document.getElementById('en-view').hidden = false; document.documentElement.lang = 'en'; var c = document.getElementById('credit'); c.textContent = 'German heating grant 2026 · Heizwechsel'; c.href = c.dataset.en; }
+      if (new URLSearchParams(location.search).get('lang') === 'en') { document.getElementById('de-view').hidden = true; document.getElementById('en-view').hidden = false; document.documentElement.lang = 'en'; var c = document.getElementById('credit'); c.textContent = 'German heating grant 2026 · Heizrechnen'; c.href = c.dataset.en; }
     </script>
   </body>
 </html>
