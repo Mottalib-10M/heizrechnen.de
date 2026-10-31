@@ -45,6 +45,8 @@ const haushalte = [
   { name: de ? 'Einkommen 35.000 €' : 'Income €35,000', e: { ...basis, zve: 35000 } },
 ];
 const zeilen = termine.map((t) => ({ t, cap: hoechstbetrag(t, 1), w: haushalte.map((hh) => foerderung({ ...hh.e, antrag: t })) }));
+const ZAHL_DE: Record<number, string> = { 3: 'drei', 4: 'vier', 5: 'fünf', 6: 'sechs', 7: 'sieben' };
+const ZAHL_EN: Record<number, string> = { 3: 'three', 4: 'four', 5: 'five', 6: 'six', 7: 'seven' };
 const maxZ = Math.max(...zeilen.flatMap((z) => z.w.map((w) => w.zuschuss)));
 
 // Heizkosten der 16 Länder: 140 m², Klasse E, Wärmepumpe gegen Gas.
@@ -74,7 +76,7 @@ const C = P.co2;
       : 'What Heizrechnen does differently: it works out, for one specific household, the grant on the exact day of the application, with the 16% climate bonus until 31 January 2027 and then 12, 8 and 4%, with the cost cap that falls every six months from €28,000, plus running costs in your own state and the CO₂ cost. Every rule carries its source and date, and there is no quote form.'}</p>
   </section>
   <section class="mt-10 border-t border-navy-200 pt-6" aria-labelledby="stichtage" data-chrome>
-    <h2 id="stichtage" class="text-2xl font-bold text-navy-900">{de ? 'Derselbe Einbau, sechs Antragsdaten' : 'The same installation, six application dates'}</h2>
+    <h2 id="stichtage" class="text-2xl font-bold text-navy-900">{de ? `Derselbe Einbau, ${ZAHL_DE[zeilen.length] ?? zeilen.length} Antragsdaten` : `The same installation, ${ZAHL_EN[zeilen.length] ?? zeilen.length} application dates`}</h2>
     <p class="mt-2 text-navy-700">{de ? 'Ölheizung ersetzt, Wärmepumpe für 32.000 €, Haus selbst bewohnt. Dunkler Balken: Einkommen 80.000 €, heller Balken: 35.000 €.' : 'Oil boiler replaced, heat pump for €32,000, owner-occupied. Dark bar: income €80,000, light bar: €35,000.'}</p>
     <ol class="mt-4 space-y-3">
       {zeilen.map((z) => (
