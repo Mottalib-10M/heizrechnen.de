@@ -7,7 +7,7 @@ import { useEffect, useMemo, useState } from 'react';
 import NumberField from '../ui/NumberField';
 import SelectField from '../ui/SelectField';
 import DateField from '../ui/DateField';
-import { foerderung, stichtage, verlauf, hoechstbetrag, type Gebaeude, type NeuHeizung } from '../../lib/engine/foerderung';
+import { foerderung, stichtage, verlauf, hoechstbetrag, antragstag, heuteISO, ANTRAG_MIN, type Gebaeude, type NeuHeizung } from '../../lib/engine/foerderung';
 import { nutzwaerme, laufend, amortisation, STANDARDPREISE, type Klasse } from '../../lib/engine/heizkosten';
 import { P } from '../../lib/engine/params';
 import { displayDate } from '../../lib/format';
@@ -20,8 +20,7 @@ interface Preset { neu?: NeuHeizung; kosten?: number; alt?: string; gebaeude?: G
 interface Props { lang?: L; methodHref?: string; preset?: Preset }
 
 const F = P.foerderung;
-const MIN = '2024-01-01', MAX = F.richtlinie_ende;
-const clampDate = (d: string) => (/^\d{4}-\d{2}-\d{2}$/.test(d) ? (d < MIN ? MIN : d > MAX ? MAX : d) : __BUILD_DAY__);
+const clampDate = (d: string) => antragstag(d, __BUILD_DAY__);
 
 export default function FoerderRechner({ lang = 'de', methodHref, preset = {} }: Props) {
   const f = fm(lang);
@@ -47,7 +46,7 @@ export default function FoerderRechner({ lang = 'de', methodHref, preset = {} }:
   const [altInv, setAltInv] = useState(d.altInv);
   useEffect(() => {
     const u = readParams(window.location.search);
-    setAntrag(clampDate(str(u, 'd', new Date().toISOString().slice(0, 10))));
+    setAntrag(clampDate(str(u, 'd', heuteISO())));
     if (![...u.keys()].length) return;
     setAlt(str(u, 'a', d.alt)); setKosten(num(u, 'k', d.kosten)); setZve(num(u, 'z', d.zve)); setKind(str(u, 'c', d.kind)); setFlaeche(num(u, 'm', d.flaeche));
     setKlasse(str(u, 'e', d.klasse)); setLand(str(u, 'l', d.land)); setNeu(str(u, 'n', d.neu)); setGeb(str(u, 'g', d.geb)); setWe(num(u, 'we', d.we)); setMea(num(u, 'mea', d.mea));
@@ -113,7 +112,7 @@ export default function FoerderRechner({ lang = 'de', methodHref, preset = {} }:
       <div className={raster}>
         <form onSubmit={(e) => e.preventDefault()} className="space-y-5">
           <div className="grid grid-cols-2 gap-x-4 gap-y-4">
-            <DateField id="fo-d" label={tx(lang, 'Datum des Antrags', 'Application date')} value={antrag} onChange={setAntrag} min={MIN} max={MAX} />
+            <DateField id="fo-d" label={tx(lang, 'Datum des Antrags', 'Application date')} value={antrag} onChange={setAntrag} min={ANTRAG_MIN} max={F.richtlinie_ende} />
             <SelectField id="fo-a" label={tx(lang, 'Heizung heute', 'Current heating')} value={alt} onChange={setAlt} options={altOpt(lang)} />
           </div>
           <div className="grid grid-cols-2 gap-x-4 gap-y-4">

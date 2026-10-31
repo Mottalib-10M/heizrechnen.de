@@ -1,7 +1,7 @@
 /** KfW 458: Zuschuss und Eigenanteil für ein selbst bewohntes Einfamilienhaus. */
 import type { MiniSpec } from '../mini-types';
 import { T, eur, pct, efh, altOpt, janein, type L } from './_kit';
-export default (l: L): MiniSpec => ({
+export default (l: L, tag: string): MiniSpec => ({
   title: T(l, 'Zuschuss für Ihr Haus', 'Grant for your house'),
   cta: T(l, 'Mit Datum, Wohnungen und Heizkosten rechnen', 'Work it out with date, homes and running costs'),
   inputs: [
@@ -11,7 +11,7 @@ export default (l: L): MiniSpec => ({
     { id: 'c', label: T(l, 'Kind unter 18', 'Child under 18'), def: 0, options: janein(l) },
   ],
   run: (v) => {
-    const r = efh({ kosten: v.k, zve: v.z, kind: v.c === 1, altIdx: v.a });
+    const r = efh({ kosten: v.k, zve: v.z, kind: v.c === 1, altIdx: v.a, antrag: tag });
     return {
       head: [T(l, 'Zuschuss', 'Grant'), eur(r.zuschuss, l)],
       rows: [

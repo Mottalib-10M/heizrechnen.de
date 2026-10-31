@@ -2,7 +2,7 @@
 import type { MiniSpec } from '../mini-types';
 import { P } from '../engine/params';
 import { T, eur, efh, type L } from './_kit';
-export default (l: L): MiniSpec => ({
+export default (l: L, tag: string): MiniSpec => ({
   title: T(l, 'Zuschuss oder Steuerbonus?', 'Grant or tax credit?'),
   cta: T(l, 'Zuschuss mit allen Angaben', 'Grant with every detail'),
   inputs: [
@@ -13,7 +13,7 @@ export default (l: L): MiniSpec => ({
     const S = P.steuer35c;
     const k = Math.max(0, v.k);
     const steuer = Math.min(k * S.jahr1, S.max1) + Math.min(k * S.jahr2, S.max2) + Math.min(k * S.jahr3, S.max3);
-    const z = efh({ kosten: k, zve: v.z, altIdx: 2 });
+    const z = efh({ kosten: k, zve: v.z, altIdx: 2, antrag: tag });
     return {
       head: [z.zuschuss >= steuer ? T(l, 'Besser: Zuschuss', 'Better: grant') : T(l, 'Besser: Steuerbonus', 'Better: tax credit'), eur(Math.max(z.zuschuss, steuer), l)],
       rows: [

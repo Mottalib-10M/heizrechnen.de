@@ -2,7 +2,7 @@
 import type { MiniSpec } from '../mini-types';
 import { P } from '../engine/params';
 import { T, eur, efh, type L } from './_kit';
-export default (l: L): MiniSpec => ({
+export default (l: L, tag: string): MiniSpec => ({
   title: T(l, 'Was der Kredit abdecken muss', 'What the loan has to cover'),
   cta: T(l, 'Zuschuss genau berechnen', 'Work out the grant exactly'),
   inputs: [
@@ -10,7 +10,7 @@ export default (l: L): MiniSpec => ({
     { id: 'z', label: T(l, 'Zu versteuerndes Einkommen', 'Taxable household income'), def: 70000, unit: '€', max: 1000000 },
   ],
   run: (v) => {
-    const r = efh({ kosten: v.k, zve: v.z, altIdx: 1 });
+    const r = efh({ kosten: v.k, zve: v.z, altIdx: 1, antrag: tag });
     const rest = Math.max(0, v.k - r.zuschuss);
     const K = P.foerderung.kredit;
     return {

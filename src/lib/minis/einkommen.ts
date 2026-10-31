@@ -3,7 +3,7 @@ import type { MiniSpec } from '../mini-types';
 import { ebSatz, deckel } from '../engine/foerderung';
 import { P } from '../engine/params';
 import { T, eur, pct, efh, janein, type L } from './_kit';
-export default (l: L): MiniSpec => ({
+export default (l: L, tag: string): MiniSpec => ({
   title: T(l, 'Ihr Einkommensbonus', 'Your income bonus'),
   cta: T(l, 'Ganzen Zuschuss berechnen', 'Work out the full grant'),
   inputs: [
@@ -11,9 +11,9 @@ export default (l: L): MiniSpec => ({
     { id: 'c', label: T(l, 'Kind unter 18', 'Child under 18'), def: 1, options: janein(l) },
   ],
   run: (v) => {
-    const d = P.retrieved_at, kind = v.c === 1;
+    const d = tag, kind = v.c === 1;
     const eb = ebSatz(d, v.z, kind);
-    const r = efh({ kosten: 28000, zve: v.z, kind, altIdx: 1 });
+    const r = efh({ kosten: 28000, zve: v.z, kind, altIdx: 1, antrag: tag });
     return {
       head: [T(l, 'Einkommensbonus', 'Income bonus'), pct(eb, l)],
       rows: [

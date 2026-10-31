@@ -12,10 +12,10 @@ export const datum = (iso: string, l: L) => displayDate(iso, LANG_TAGS[l]);
 export const janein = (l: L) => [{ value: '0', label: T(l, 'Nein', 'No') }, { value: '1', label: T(l, 'Ja', 'Yes') }];
 export type Rows = [string, string][];
 
-/** Stichtage als Auswahl (Wert = Index): heute (Build-Tag) und die nächsten Absenkungen. */
-export const TERMINE = [P.retrieved_at, ...P.foerderung.kgb_stufen.map((s) => s.ab).filter((d) => d > P.retrieved_at)];
-export const terminOpt = (l: L) => TERMINE.map((d, i) => ({ value: String(i), label: i === 0 ? T(l, `jetzt (Stand ${datum(d, l)})`, `now (as of ${datum(d, l)})`) : datum(d, l) }));
-export const termin = (i: number) => TERMINE[Math.min(Math.max(Math.round(i) || 0, 0), TERMINE.length - 1)];
+/** Stichtage als Auswahl (Wert = Index): der Antragstag `tag` (heute, im Browser gesetzt) und die nächsten Absenkungen. */
+export const termine = (tag: string) => [tag, ...P.foerderung.kgb_stufen.map((s) => s.ab).filter((d) => d > tag)];
+export const terminOpt = (l: L, tag: string) => termine(tag).map((d, i) => ({ value: String(i), label: i === 0 ? T(l, `heute (${datum(d, l)})`, `today (${datum(d, l)})`) : datum(d, l) }));
+export const termin = (tag: string, i: number) => { const t = termine(tag); return t[Math.min(Math.max(Math.round(i) || 0, 0), t.length - 1)]; };
 
 /** Alte Heizung als Zahl (Mini-Rechner kennen nur Zahlen). */
 export const ALT: Array<{ alt: AltHeizung; jahre: number; de: string; en: string }> = [
@@ -28,9 +28,9 @@ export const ALT: Array<{ alt: AltHeizung; jahre: number; de: string; en: string
 export const altOpt = (l: L) => ALT.map((a, i) => ({ value: String(i), label: l === 'en' ? a.en : a.de }));
 export const alt = (i: number) => ALT[Math.min(Math.max(Math.round(i) || 0, 0), ALT.length - 1)];
 
-/** Einfamilienhaus, selbst bewohnt: der häufigste Fall der Mini-Rechner. */
-export function efh(o: { kosten: number; zve: number; kind?: boolean; altIdx?: number; antrag?: string; neu?: NeuHeizung; eu?: boolean }) {
+/** Einfamilienhaus, selbst bewohnt: der häufigste Fall der Mini-Rechner. `antrag`: Antragstag (heute). */
+export function efh(o: { kosten: number; zve: number; kind?: boolean; altIdx?: number; antrag: string; neu?: NeuHeizung; eu?: boolean }) {
   const a = alt(o.altIdx ?? 1);
-  const e: FoerderEingabe = { antrag: o.antrag ?? P.retrieved_at, gebaeude: 'efh', einheiten: 1, kosten: Math.max(0, o.kosten), selbstnutzer: true, alt: a.alt, altJahre: a.jahre, neu: o.neu ?? 'wp', wpEU: o.eu ?? true, zve: Math.max(0, o.zve), kind: !!o.kind };
+  const e: FoerderEingabe = { antrag: o.antrag, gebaeude: 'efh', einheiten: 1, kosten: Math.max(0, o.kosten), selbstnutzer: true, alt: a.alt, altJahre: a.jahre, neu: o.neu ?? 'wp', wpEU: o.eu ?? true, zve: Math.max(0, o.zve), kind: !!o.kind };
   return foerderung(e);
 }

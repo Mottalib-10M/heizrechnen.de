@@ -2,18 +2,22 @@
  * Mini-simulateur de page (RECETTE §9.3) : un ou deux champs, le chiffre du sujet de la page mis en
  * avant, deux à quatre lignes de détail et un lien vers le calculateur complet. Le calcul vient du
  * moteur du site, décrit dans `lib/mini-specs.ts` (une entrée par sujet). Premier rendu = valeurs
- * par défaut du build (§17.5) ; `data-chrome` : le texte du widget ne compte ni dans les mots ni
+ * par défaut du build (§17.5), puis, à l'hydratation, le jour de la demande passe au jour du navigateur
+ * (même règle que le grand calculateur : `antragstag`) ; `data-chrome` : le texte du widget ne compte ni dans les mots ni
  * dans la comparaison entre pages.
  */
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import NumberField from '../ui/NumberField';
 import SelectField from '../ui/SelectField';
 import { getSpec } from '../../lib/mini-specs';
+import { antragstag, heuteISO } from '../../lib/engine/foerderung';
 
 interface Props { kind: string; lang?: string; href?: string; defaults?: Record<string, number>; lead?: boolean }
 
 export default function MiniSim({ kind, lang = 'de', href, defaults = {}, lead = false }: Props) {
-  const spec = getSpec(kind, lang);
+  const [tag, setTag] = useState(() => antragstag(__BUILD_DAY__, __BUILD_DAY__));
+  useEffect(() => setTag(antragstag(heuteISO(), __BUILD_DAY__)), []);
+  const spec = useMemo(() => getSpec(kind, lang, tag), [kind, lang, tag]);
   const [v, setV] = useState<Record<string, number>>(() => Object.fromEntries(spec.inputs.map((i) => [i.id, defaults[i.id] ?? i.def])));
   const out = useMemo(() => spec.run(v), [v, spec]);
   const set = (id: string) => (x: number) => setV((o) => ({ ...o, [id]: x }));

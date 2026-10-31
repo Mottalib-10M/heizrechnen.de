@@ -75,6 +75,19 @@ export function stufe<T extends { ab: string }>(liste: T[], datum: string): T | 
 }
 export const regime = (antrag: string): Regime => (antrag < F.richtlinie_in_kraft ? 'alt' : 'neu');
 
+/** Frühester Antragstag, den die Rechner annehmen (Richtlinie vom 21.12.2023 in Kraft). */
+export const ANTRAG_MIN = '2024-01-01';
+/** Heutiges Datum (Ortszeit des Browsers) als ISO-Text. */
+export function heuteISO(jetzt: Date = new Date()): string {
+  const z = (n: number) => String(n).padStart(2, '0');
+  return `${jetzt.getFullYear()}-${z(jetzt.getMonth() + 1)}-${z(jetzt.getDate())}`;
+}
+/** Antragstag, den großer Rechner und Mini-Rechner ansetzen: das Datum, auf die Laufzeit der Richtlinie begrenzt; ungültig → Ersatzwert. */
+export function antragstag(datum: string, ersatz: string): string {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(datum)) return ersatz;
+  return datum < ANTRAG_MIN ? ANTRAG_MIN : datum > F.richtlinie_ende ? F.richtlinie_ende : datum;
+}
+
 /** Höchstbetrag förderfähiger Kosten des Gebäudes (Nr. 8.3.1 a). */
 export function hoechstbetrag(antrag: string, einheiten: number): number {
   const n = Math.max(1, Math.floor(einheiten));

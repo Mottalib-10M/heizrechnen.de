@@ -1,9 +1,8 @@
 /** Vermieter: Grundförderung je Haus, Boni nur für die selbst bewohnte Wohnung. */
 import type { MiniSpec } from '../mini-types';
 import { foerderung } from '../engine/foerderung';
-import { P } from '../engine/params';
 import { T, eur, pct, janein, type L } from './_kit';
-export default (l: L): MiniSpec => ({
+export default (l: L, tag: string): MiniSpec => ({
   title: T(l, 'Zuschuss für ein vermietetes Haus', 'Grant for a let building'),
   cta: T(l, 'Mit allen Angaben rechnen', 'Calculate with every detail'),
   inputs: [
@@ -13,7 +12,7 @@ export default (l: L): MiniSpec => ({
   ],
   run: (v) => {
     const n = Math.max(2, Math.round(v.n) || 2);
-    const r = foerderung({ antrag: P.retrieved_at, gebaeude: 'mfh', einheiten: n, kosten: v.k, selbstnutzer: v.s === 1, alt: 'gas', altJahre: 25, neu: 'wp', wpEU: true, zve: 60000, kind: false });
+    const r = foerderung({ antrag: tag, gebaeude: 'mfh', einheiten: n, kosten: v.k, selbstnutzer: v.s === 1, alt: 'gas', altJahre: 25, neu: 'wp', wpEU: true, zve: 60000, kind: false });
     return {
       head: [T(l, 'Zuschuss', 'Grant'), eur(r.zuschuss, l)],
       rows: [

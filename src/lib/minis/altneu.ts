@@ -3,7 +3,7 @@ import type { MiniSpec } from '../mini-types';
 import { foerderung } from '../engine/foerderung';
 import { P } from '../engine/params';
 import { T, eur, pct, type L } from './_kit';
-export default (l: L): MiniSpec => ({
+export default (l: L, tag: string): MiniSpec => ({
   title: T(l, 'Alte und neue Förderung im Vergleich', 'Old and new grant compared'),
   cta: T(l, 'Mit Ihren Zahlen rechnen', 'Use your own figures'),
   inputs: [
@@ -13,7 +13,7 @@ export default (l: L): MiniSpec => ({
   run: (v) => {
     const base = { gebaeude: 'efh' as const, einheiten: 1, kosten: v.k, selbstnutzer: true, alt: 'oel' as const, altJahre: 25, neu: 'wp' as const, wpEU: true, zve: v.z, kind: false };
     const alt = foerderung({ ...base, antrag: P.foerderung.alt.bis, effizienz: true });
-    const neu = foerderung({ ...base, antrag: P.retrieved_at });
+    const neu = foerderung({ ...base, antrag: tag });
     return {
       head: [T(l, 'Unterschied', 'Difference'), eur(neu.zuschuss - alt.zuschuss, l)],
       rows: [
