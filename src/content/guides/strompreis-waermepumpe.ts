@@ -54,7 +54,7 @@ ${h.table(['Preis', 'ct je kWh', 'Stand', 'Kosten im Beispielhaus'], [
 ], `Beispielhaus 140 m², Klasse E, Niedersachsen, Luft-Wärmepumpe, ${h.num(kwhL)} kWh Strom im Jahr`, ['l', 'r', 'l', 'r'])}
 <p>Die Bundesnetzagentur hat die Lieferanten für einen Jahresverbrauch von ${h.num(fall)} kWh gefragt und die Antworten nach Menge gewichtet. Wer deutlich weniger verbraucht, zahlt je kWh etwas mehr, weil der Grundpreis auf weniger Kilowattstunden fällt. Die Zahlen von Destatis gelten für das erste Halbjahr 2026; die Heizstromwerte stammen vom Frühjahr 2025 und sind damit die ältere Quelle.</p>
 
-<h2>Woraus der Preis besteht</h2>
+<h2>Woraus der Strompreis besteht</h2>
 <p>Nach der Aufschlüsselung der Bundesnetzagentur macht der Teil, den der Lieferant selbst bestimmt, also Einkauf, Vertrieb und Marge, ungefähr die Hälfte des Heizstrompreises aus. Der Rest sind Netzentgelte, Messstellenbetrieb, Konzessionsabgabe, Umlagen, Stromsteuer und Umsatzsteuer. Genau dort liegt der Vorteil der getrennten Messung: Für Strom, der über einen eigenen Zählpunkt in die Wärmepumpe fließt, entfallen nach § 22 EnFG die KWK-Umlage und die Offshore-Netzumlage. Dazu kommen ein niedrigeres Netzentgelt, weil der Netzbetreiber die Wärmepumpe steuern darf, und eine geringere Konzessionsabgabe. Was der zweite Zähler kostet und welche Netzentgelt-Module es gibt, erklärt ${h.a('waermepumpentarif', 'Wärmepumpentarif')}.</p>
 
 <h2>Warum die Werte für 2026 eher zu hoch sind</h2>
@@ -103,7 +103,7 @@ ${h.table(['Price', 'ct per kWh', 'As of', 'Cost in the example house'], [
 ], `Example house 140 m², class E, Lower Saxony, air-source heat pump, ${h.num(kwhL)} kWh of power a year`, ['l', 'r', 'l', 'r'])}
 <p>The Federal Network Agency asked suppliers about annual use of ${h.num(fall)} kWh and weighted the answers by volume. If you use much less, you pay a little more per kWh because the standing charge is spread over fewer units. The Destatis figures cover the first half of 2026; the heating tariff values date from spring 2025 and are the older source.</p>
 
-<h2>What the price is made of</h2>
+<h2>What the heat pump electricity price is made of</h2>
 <p>In the Federal Network Agency’s breakdown, the part the supplier controls, meaning purchasing, sales and margin, is roughly half of the heating power price. The rest is network charges, metering, concession fee, levies, electricity tax and VAT. That is where separate metering pays: electricity flowing to the heat pump through its own metering point is exempt from the combined heat and power levy and the offshore grid levy under section 22 of the Energy Financing Act. On top come a lower network charge, because the grid operator may control the heat pump, and a lower concession fee. What the second meter costs and which network charge options exist is explained under ${h.a('waermepumpentarif', 'heat pump tariff')}.</p>
 
 <h2>Why the 2026 figures are probably too high</h2>

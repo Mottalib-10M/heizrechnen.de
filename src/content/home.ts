@@ -46,7 +46,7 @@ ${h.table(['Antrag ab', 'Klimabonus', 'Höchstbetrag', 'Zuschuss'], [[h.date(heu
 <h2>CO₂-Preis: was 2026 gilt und was 2027 kommt</h2>
 <p>Für 2026 setzt das Brennstoffemissionshandelsgesetz einen Korridor von ${h.num(P.co2.korridor_2026.min)} bis ${h.num(P.co2.korridor_2026.max)} € je Tonne (${h.src('behg10', '§ 10 BEHG')}); versteigert wurde bisher im Schnitt zum Höchstpreis (${h.src('dehst', 'DEHSt')}). Ein Liter Heizöl trägt damit ${h.num(aufschlagCent('oel', P.co2.korridor_2026.max), 1)} ct CO₂-Kosten mit Mehrwertsteuer, bei ${h.num(kgJeLiterOel, 2)} kg CO₂ je Liter. Für 2027 hat der Bundestag am ${h.date(P.co2.korridor_2027_beschlossen.bundestag)} denselben Korridor beschlossen (${h.src('btBehg', 'Bundestag')}); verkündet ist das Gesetz noch nicht. Ab ${P.co2.ets2_start} soll der europäische Emissionshandel ETS2 übernehmen, einen festen Preis gibt es dafür nicht. Details: ${h.a('co2-preis-2027', 'CO₂-Preis 2027')} und ${h.a('co2-steuer', 'CO₂-Rechner')}.</p>
 <!--mini:co2oel-->
-<h2>Wie diese Seite rechnet</h2>
+<h2>Wie diese Seite die Heizungsförderung rechnet</h2>
 <p>Alle Sätze, Stichtage und Höchstbeträge stammen aus der Richtlinie vom 17. August 2026 und dem Merkblatt der Förderbank; die Beispiele der Förderbank laufen vor jeder Veröffentlichung als automatische Tests. Angekündigte Regeln, deren Starttag fehlt, kennzeichnet der Rechner, statt sie als geltend auszugeben. Vollständig unter ${h.a('method', 'So rechnen wir')}.</p>`,
   },
   en: {
@@ -74,7 +74,7 @@ ${h.table(['Applying from', 'Climate bonus', 'Cost cap', 'Grant'], [[h.date(heut
 <h2>CO₂ price: what applies in 2026 and what comes in 2027</h2>
 <p>For 2026 the Fuel Emissions Trading Act sets a corridor of €${h.num(P.co2.korridor_2026.min)} to €${h.num(P.co2.korridor_2026.max)} per tonne (${h.src('behg10', 'section 10 BEHG')}); auctions so far have cleared at the top price on average (${h.src('dehst', 'DEHSt')}). One litre of heating oil therefore carries ${h.num(aufschlagCent('oel', P.co2.korridor_2026.max), 1)} ct of CO₂ cost including VAT, at ${h.num(kgJeLiterOel, 2)} kg of CO₂ per litre. For 2027 the Bundestag passed the same corridor on ${h.date(P.co2.korridor_2027_beschlossen.bundestag)} (${h.src('btBehg', 'Bundestag')}); the act has not yet been promulgated. From ${P.co2.ets2_start} the EU ETS2 is due to take over, with no fixed price. Details: ${h.a('co2-preis-2027', 'CO₂ price 2027')} and ${h.a('co2-steuer', 'CO₂ calculator')}.</p>
 <!--mini:co2oel-->
-<h2>How this site calculates</h2>
+<h2>How this site calculates the heating grant</h2>
 <p>Every rate, deadline and cap comes from the guideline of 17 August 2026 and the bank’s information sheet; the bank’s own worked examples run as automated tests before each release. Announced rules without a start date are flagged by the calculator rather than presented as law. In full under ${h.a('method', 'how we calculate')}.</p>`,
   },
 };

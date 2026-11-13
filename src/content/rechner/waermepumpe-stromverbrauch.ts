@@ -83,7 +83,7 @@ ${h.table(['Klasse', 'Wärme im Jahr', 'Luft-Wärmepumpe', 'Erdwärmepumpe'], pr
 <h2>The formula behind electricity use</h2>
 <p>Electricity use equals heat demand divided by SPF: there is nothing more to it. Only the two inputs are hard. The calculator estimates heat demand from the energy class on your energy certificate (Energieausweis) under ${h.src('gmodgAnlage10', 'annex 10 of the Building Modernisation Act')}. Each class covers a band; the calculator takes its midpoint as an assumption and applies your state’s climate from the degree days of the ${h.src('dwd', 'German weather service')}. The SPF comes from the ${h.src('iseWpqs', 'Fraunhofer ISE field test of heat pumps in existing buildings')}, measured mainly in 2024 on 49 air-to-water and 13 ground-source systems. It describes the unit itself; with buffer tank and backup heater the system figure is somewhat lower. If you are buying a house and have no energy certificate at hand, ask for the previous owner’s gas bills and enter those instead.</p>
 
-<h2>Electricity use by energy class</h2>
+<h2>Heat pump electricity use by energy class</h2>
 <p>For a 140 m² house in Bavaria, using the measured average SPFs:</p>
 ${h.table(['Class', 'Heat a year', 'Air-source', 'Ground-source'], proKlasse.map((x) => [x.k, `${h.num(x.w)} kWh`, `${h.num(x.luft.menge)} kWh`, `${h.num(x.sole.menge)} kWh`]), `SPF ${h.num(T.jaz_luft_messung, 1)} (air) and ${h.num(T.jaz_sole_messung, 1)} (ground), class midpoint as an assumption`, ['l', 'r', 'r', 'r'])}
 <p>From class B to class G the electricity need more than triples. If you know the energy figure on your certificate, the small calculator below finds the class:</p>

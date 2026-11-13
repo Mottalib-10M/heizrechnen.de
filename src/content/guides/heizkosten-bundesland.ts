@@ -62,7 +62,7 @@ export default defineGuide({
 <p>Erstens die Lage im Osten. Je weiter ein Ort vom Atlantik entfernt ist, desto kälter werden die Winter. Sachsen, Thüringen und Brandenburg liegen deshalb über dem Mittel, obwohl sie nicht weiter nördlich liegen als Hessen. Zweitens die Höhe: Erfurt, Gera und Chemnitz liegen höher als die Städte am Rhein, und mit jedem Höhenmeter sinkt die Temperatur. Drittens die Küste. An Nord- und Ostsee sind die Winter mild, aber Frühjahr und Herbst bleiben lange kühl und windig. Die Heizperiode zieht sich dort, und Schleswig-Holstein landet in der Tabelle weit oben.</p>
 <p>Auf der anderen Seite stehen der Oberrheingraben und die Rhein-Main-Region. Frankfurt, Mannheim, Freiburg und die großen Städte an Rhein und Ruhr gehören zu den wärmsten Orten Deutschlands. Hessen, Nordrhein-Westfalen und Baden-Württemberg haben deshalb die niedrigsten Werte, obwohl dort auch kalte Mittelgebirge liegen. Die Messstationen stehen eben in den Städten.</p>
 
-<h2>Alle 16 Länder im Vergleich zum Mittel</h2>
+<h2>Heizkosten in allen 16 Ländern im Vergleich zum Mittel</h2>
 <p>Die Tabelle zeigt die Gradtagzahl jedes Landes, ihren Abstand zum Mittel der 16 Länder von ${h.num(mittelGt)} und was das für die Gasrechnung des Beispielhauses mit ${FL} m² in Klasse E bedeutet, gemessen am Durchschnitt aller Länder von ${h.eur(mittelGas)}.</p>
 ${h.table(['Land', 'Gradtage', 'zum Mittel', 'Gas im Jahr zum Mittel', 'Stationen'], rows.map((r) => [
   r.land, h.num(r.gt), vorz(r.gt / mittelGt - 1, (x) => h.pct(x)), vorz(r.gas - mittelGas, (x) => h.eur(x)), r.stationen.join(', '),
@@ -103,7 +103,7 @@ ${h.table(['Land', 'Gradtage', 'zum Mittel', 'Gas im Jahr zum Mittel', 'Statione
 <p>First, distance from the Atlantic. The further east a place lies, the colder its winters. Saxony, Thuringia and Brandenburg are above the average even though they are no further north than Hesse. Second, altitude: Erfurt, Gera and Chemnitz sit higher than the cities on the Rhine, and temperature falls with height. Third, the coast. Winters by the North Sea and the Baltic are mild, but spring and autumn stay cool and windy for a long time. The heating season drags on, and Schleswig-Holstein ends up near the top of the table. If you are moving from the UK or the Netherlands, northern Germany will feel familiar; the east and the uplands have harder winters.</p>
 <p>At the other end are the Upper Rhine valley and the Rhine-Main area. Frankfurt, Mannheim, Freiburg and the big cities along the Rhine and the Ruhr are among the warmest places in Germany. Hesse, North Rhine-Westphalia and Baden-Württemberg therefore have the lowest values, even though they include cold uplands. The weather stations simply stand in the cities.</p>
 
-<h2>All 16 states against the average</h2>
+<h2>Heating costs in all 16 states against the average</h2>
 <p>The table shows each state’s degree days, the gap to the 16-state average of ${h.num(mittelGt)} and what that means for the gas bill of the ${FL} m² class E example house, measured against the average of all states, ${h.eur(mittelGas)}.</p>
 ${h.table(['State', 'Degree days', 'vs average', 'Gas a year vs average', 'Stations'], rows.map((r) => [
   en(r.land), h.num(r.gt), vorz(r.gt / mittelGt - 1, (x) => h.pct(x)), vorz(r.gas - mittelGas, (x) => h.eur(x)), r.stationen.join(', '),

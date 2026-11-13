@@ -146,7 +146,7 @@ ${h.table(['System', 'Terraced house 100 m², class D, NRW', 'Old house 180 m²,
 <h2>Renovate or replace: which does more</h2>
 <p>In the old house above, renovating from class G to class D cuts heat demand from ${h.num(qA)} to ${h.num(qAD)} kWh. Gas then costs ${h.eur(gasAD.kosten)} instead of ${h.eur(gasA.kosten)}, the air heat pump ${h.eur(luftAD.kosten)} instead of ${h.eur(luftA.kosten)}. The two steps complement each other: insulation shrinks the amount of heat, the heat pump lowers the price of each kWh. The class values are mid-points of the legal bands and so an assumption. If you know your measured consumption, enter it directly in the ${h.a('heizkosten-rechner', 'heating cost calculator')}; the previous owner’s bills, if you are buying, are the best starting point.</p>
 
-<h2>What the comparison leaves out</h2>
+<h2>What the heating cost comparison leaves out</h2>
 <p>The comparison shows running energy costs only. It does not include purchase, servicing, the chimney sweep (Schornsteinfeger), meter rental or the standing charge of a second electricity meter, because there are no official averages for them. The future CO₂ price can only be shown as a scenario. At ${h.eur(szen)} per tonne instead of the roughly ${h.eur(P.co2.auktion_2026_durchschnitt)} contained in 2026 prices, gas in the old house would cost ${h.eur(gasASzen)} and oil ${h.eur(oelASzen)}. That is arithmetic, not a forecast. How the gas price is made up and how much of it is CO₂ is explained under ${h.a('gaspreis', 'gas price')}. Whether switching pays off once purchase and grant are included is worked out under ${h.a('waermepumpe-oder-gasheizung', 'heat pump or gas boiler')}.</p>`,
   },
 });

@@ -106,7 +106,7 @@ ${h.table(['Owner', 'Share', 'Income', 'Rate', 'Additional', 'Share of basic', '
 <p>Flat 3 shows the family allowance: with a child KfW counts ${h.eur(F.familienzuschlag)} less income, so the income bonus rises from ${h.pct(F.einkommen_stufen[2].bonus)} to ${h.pct(F.einkommen_stufen[1].bonus)}. Together with the basic grant and climate bonus that would pass ${h.pct(F.deckel_standard)}, so it is cut to that ceiling. Flat 7 gets the lowest income band of ${h.pct(F.einkommen_stufen[0].bonus)}, and its ceiling rises to ${h.pct(F.deckel_niedrig)}. Its cost share is below the slice per flat, so the bonuses apply to the full share. The bands are explained under ${h.a('einkommensbonus', 'income bonus')}. Income means the average on your German tax assessments for the second and third year before applying; income earned abroad counts too.</p>
 <!--mini:einkommen-->
 
-<h2>Who pays what</h2>
+<h2>Heating grant in an owners’ association: who pays what</h2>
 <p>The basic grant is paid to the association. The calculator splits it like the costs, by ownership share; how the association handles it internally is for its own resolutions, not the funding guideline. The bonus from the additional application goes to the individual owner. For flat 1 that means ${h.eur(schmidt.eigeneKosten)} of costs, ${h.eur(schmidt.zuschuss)} of funding in total and ${h.eur(schmidt.eigenanteil)} left to pay.</p>
 <p>The stacking limit applies here too: other public funds for the same work, where allowed alongside this programme at all, may not take the total above ${h.pct(F.kumulierung_max)} of the funded costs (${h.src('begem2026', 'guideline no. 8.6')}).</p>
 

@@ -71,7 +71,7 @@ ${h.table(['Thema', 'GEG bis 28.07.2026', 'GModG seit 29.07.2026'], [
 <h2>Was unverändert bleibt</h2>
 <p>Viele Pflichten des alten Gesetzes bestehen weiter: die Dämmung der obersten Geschossdecke und ungedämmter Rohre nach einem Eigentümerwechsel (§§ 35, 69), die Anforderungen an Bauteile, wenn sie erneuert werden (§ 36 mit Anlage 7), die Prüfung und Optimierung von Wärmepumpen und älteren Heizungen (§§ 60a bis 60c) und der Energieausweis beim Verkauf und bei der Vermietung. Die Regeln für Stromdirektheizungen hat das GModG in § 46 neu gefasst. Für die kommunale Wärmeplanung gelten die Fristen des ${h.src('wpg4', 'Wärmeplanungsgesetzes')} weiter, nur hängt keine Heizungspflicht mehr daran (${h.a('waermeplanung', 'Wärmeplanung')}).</p>
 
-<h2>Was Hausbesitzer jetzt tun müssen</h2>
+<h2>Was Hausbesitzer nach dem Heizungsgesetz jetzt tun müssen</h2>
 <p>Für eine Heizung, die schon läuft, verlangt das GModG heute nichts: kein Austausch, kein Biogas, keine Frist. Wer bis Ende 2028 eine neue Gas- oder Ölheizung einbaut, hat bis zum 1. Januar ${jahr(T[0].ab)} Zeit, einen passenden Tarif oder eine der technischen Lösungen zu wählen. Vermieter müssen ab ${jahr(A.neue_fossile_heizung_ab)} die CO₂-Kosten einer solchen neuen Heizung zur Hälfte tragen und sollten das in die Wahl einbeziehen. Wer eine Wärmepumpe plant, richtet sich nicht nach dem Gesetz, sondern nach den Stichtagen der Förderung, die jedes halbe Jahr weniger zahlt.</p>
 
 <h2>Und die Förderung?</h2>
@@ -123,7 +123,7 @@ ${h.table(['Topic', 'GEG until 28 July 2026', 'GModG since 29 July 2026'], [
 <p>Section 43 does not prescribe a product. Besides biomethane, bio-oil, biogenic LPG and hydrogen in four colours, the law allows three technical routes. Solar thermal counts as compliance from ${jahr(T[0].ab)} to the end of 2034 if the collector area is large enough: ${h.num(G.solar_m2_je_m2_bis_2we, 2)} m² per m² of floor area with up to two homes, so ${h.num(kollektor1)} m² for a 150 m² house, and ${h.num(G.solar_m2_je_m2_ab_3we, 2)} m² with more homes, so ${h.num(kollektor3)} m² for a three-family house of ${h.num(nutzflaeche)} m². Ventilation with at least 73 per cent heat recovery serving the whole building works the same way over that period. Finally, a hybrid counts as compliance if the heat pump delivers at least ${h.pct(G.hybrid_wp_leistung_min)} of the boiler output; with six or more homes, the share it really supplies must be proven after 2039. Outside the window up to 2034, a solar system needs proof from a qualified person as soon as more than 15 per cent is to be counted.</p>
 <!--mini:gasneu-->
 
-<h2>What stays the same</h2>
+<h2>What stays the same in the heating law</h2>
 <p>Many duties of the old law continue: insulating the top floor ceiling and bare pipes after a change of ownership (sections 35 and 69), standards for building parts when they are renewed (section 36 with annex 7), checks and optimisation of heat pumps and older heating systems (sections 60a to 60c), and the energy certificate when selling or letting. The GModG has redrafted the rules on direct electric heating in section 46. Municipal heat planning keeps the deadlines of the ${h.src('wpg4', 'Heat Planning Act')}, but no heating duty depends on it any more (${h.a('waermeplanung', 'heat planning')}).</p>
 
 <h2>And the grants?</h2>

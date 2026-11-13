@@ -44,7 +44,7 @@ export default defineGuide({
       { q: 'Verlangt die Bank für den Ergänzungskredit Sicherheiten?', a: 'Das entscheidet die Bank. Die KfW schreibt dazu nur, dass Art und Höhe der Sicherheiten mit dem Finanzierungspartner vereinbart werden. Die KfW selbst legt dafür keine festen Regeln für Privatkunden offen, deshalb unterscheiden sich die Angebote der Banken. Fragen Sie danach, bevor Sie die Bank wählen, denn Antrag und Vertrag laufen ausschließlich über sie.' },
     ],
     body: (h) => `
-<h2>Wozu der Kredit da ist</h2>
+<h2>Wozu der Ergänzungskredit da ist</h2>
 <p>Der Zuschuss aus der Heizungsförderung wird erst ausgezahlt, wenn die Heizung läuft und die Nachweise geprüft sind. Der Fachbetrieb will sein Geld früher. Der Ergänzungskredit finanziert deshalb nicht nur den Eigenanteil, sondern auf Wunsch die gesamten förderfähigen Kosten vor, bis zu ${h.pct(1)} davon. Kommt der Zuschuss, zahlen Sie ihn als Sondertilgung zurück. Der Kredit ist Teil derselben Richtlinie wie der Zuschuss (${h.src('begem2026', 'Richtlinie BEG EM, Nr. 8.1')}) und darf ausdrücklich mit ihm kombiniert werden, obwohl sonst für dieselben Kosten nur eine Förderung zulässig ist.</p>
 <p>Voraussetzung ist eine Zuschusszusage der KfW oder ein Zuwendungsbescheid des BAFA nach der Richtlinie für Einzelmaßnahmen auf Ihren Namen. Sie darf nicht älter als zwölf Monate sein, und der Zuschuss darf noch nicht ausgezahlt sein. Wer erst baut und dann merkt, dass das Geld knapp wird, muss also rechtzeitig handeln.</p>
 
@@ -99,7 +99,7 @@ ${h.table(['Laufzeit', 'Zinsbindung', 'tilgungsfreie Jahre'], [
       { q: 'Does the bank ask for security for the top-up loan?', a: 'That is up to the bank. KfW only states that the type and amount of security are agreed with the lending bank. KfW publishes no fixed rule for this, so offers from different banks can differ. Ask before choosing a bank, because the application and the loan agreement run entirely through it.' },
     ],
     body: (h) => `
-<h2>What the loan is for</h2>
+<h2>What the top-up loan is for</h2>
 <p>The heating grant is paid only once the system is running and the evidence has been checked. The installer wants paying sooner. The top-up loan therefore covers not just your own share but, if you wish, all of the eligible costs, up to ${h.pct(1)} of them. When the grant arrives, you use it as a special repayment. The loan is part of the same guideline as the grant (${h.src('begem2026', 'BEG EM guideline, no. 8.1')}) and may expressly be combined with it, even though only one form of funding is otherwise allowed for the same costs.</p>
 <p>You need a KfW grant approval or a BAFA funding notice under the single-measures guideline in your name. It must be no more than twelve months old, and the grant must not yet have been paid. If you start building and only then find money is short, act in time.</p>
 

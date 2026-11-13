@@ -33,7 +33,7 @@ export default defineGuide({
     title: 'CO2 Kosten Aufteilung 2026: Rechner für Mieter und Vermieter',
     description: `CO2 Kosten Aufteilung 2026: Aus Verbrauch und Wohnfläche die Stufe nach CO2KostAufG, Vermieter zahlt bis ${DE.pct(vMax)}. Mit Denkmal, Gewerbe und neuer Gasheizung.`,
     h1: 'CO₂-Kosten Aufteilung: Ihr Anteil als Mieter oder Vermieter',
-    intro: 'Verbrauch, Wohnfläche und Brennstoff eingeben: Der Rechner bestimmt die Stufe nach dem CO2KostAufG und teilt die CO₂-Kosten zwischen Mieter und Vermieter auf.',
+    intro: 'Verbrauch, Wohnfläche und Brennstoff eingeben: Der Rechner bestimmt die Stufe nach dem CO2KostAufG und berechnet die Aufteilung der CO₂-Kosten zwischen Mieter und Vermieter.',
     resume: `Die CO₂-Kosten für Gas und Heizöl teilen sich Mieter und Vermieter nach dem Kohlendioxidkostenaufteilungsgesetz. Maßgeblich ist, wie viel CO₂ die Wohnung im Jahr je Quadratmeter Wohnfläche verursacht, auf eine Nachkommastelle gerundet. Unter ${DE.num(grenze)} kg trägt der Mieter alles, ab ${DE.num(oben)} kg zahlt der Vermieter ${DE.pct(vMax)}; dazwischen liegen zehn Stufen. Eine Wohnung mit 70 m² und ${DE.num(12000)} kWh Gas im Jahr kommt auf ${DE.num(gas.kgM2, 1)} kg je m². Bei ${DE.eur(preis)} je Tonne, dem Durchschnitt der Versteigerungen 2026, und mit Mehrwertsteuer sind das rund ${DE.eur(gas.kosten)} CO₂-Kosten, davon ${DE.pct(gas.vermieter)} oder ${DE.eur(gas.vermieterEuro)} für den Vermieter. Eine Ölwohnung mit 90 m² und ${DE.num(1800)} Litern liegt bei ${DE.num(oel.kgM2, 1)} kg, dort zahlt der Vermieter ${DE.eur(oel.vermieterEuro)} von ${DE.eur(oel.kosten)}. Denkmalschutz oder Milieuschutz halbieren seinen Anteil. Wird nach dem 29. Juli 2026 eine neue Gas- oder Ölheizung eingebaut, gilt ab 2028 eine hälftige Teilung.`,
     faqs: [
       { q: 'Wie wird der CO₂-Ausstoß je Quadratmeter für die Aufteilung berechnet?', a: `Die gesamte CO₂-Menge des Jahres wird durch die Wohnfläche geteilt und auf eine Nachkommastelle gerundet. Die CO₂-Menge ergibt sich aus dem Brennstoffverbrauch und den amtlichen Emissionsfaktoren, bei Heizöl rund ${DE.num(oel.kg / 1800, 2)} kg je Liter. Liegt das Ergebnis genau auf einer Stufengrenze, gilt schon die höhere Stufe: ${DE.num(grenze, 1)} kg führen zur zweiten Stufe mit ${DE.pct(1 - st[1].mieter)} für den Vermieter.` },
@@ -42,7 +42,7 @@ export default defineGuide({
       { q: 'Zahlt der Vermieter im Baudenkmal einen kleineren CO₂-Anteil?', a: `Ja, sein Anteil halbiert sich, wenn Denkmalschutz, ein Anschluss- und Benutzungszwang oder eine Erhaltungssatzung zum Milieuschutz eine wesentliche energetische Sanierung verhindern. In der Beispielwohnung sinkt er von ${DE.pct(gas.vermieter)} auf ${DE.pct(denkmal.vermieter)}. Sind beide Arten der Sanierung verhindert, entfällt die Aufteilung ganz. Diese Umstände muss der Vermieter nachweisen.` },
     ],
     body: (h) => `
-<h2>So teilt das Gesetz die Kosten</h2>
+<h2>So regelt das Gesetz die Aufteilung der Kosten</h2>
 <p>Das Kohlendioxidkostenaufteilungsgesetz verteilt die CO₂-Kosten nach dem Zustand des Gebäudes: Je mehr CO₂ eine Wohnung je Quadratmeter verursacht, desto mehr zahlt der Vermieter (${h.src('co2kostaufg', 'CO2KostAufG')}). Der Gedanke dahinter: Der Mieter beeinflusst sein Heizverhalten, der Vermieter Dämmung und Heizung.</p>
 ${h.table(['kg CO₂ je m² und Jahr', 'Mieter', 'Vermieter'], st.map((s, i) => [
   i === 0 ? `unter ${h.num(st[1].ab)}` : i === st.length - 1 ? `ab ${h.num(s.ab)}` : `${h.num(s.ab)} bis unter ${h.num(st[i + 1].ab)}`,
@@ -77,7 +77,7 @@ ${h.table(['Wohnung', 'kg je m²', 'CO₂-Kosten', 'Vermieter', 'Mieter'], [
       { q: 'Does the tier table apply to offices and shops?', a: `No. Non-residential buildings use an even split: any agreement making the tenant pay more than ${EN.pct(A.nichtwohn_mieter_max)} of the CO₂ cost is void. The act announces a separate tier model for non-residential buildings, but it is still missing from the legal text. In the calculator, switch to commercial under “Special cases”.` },
     ],
     body: (h) => `
-<h2>How the law splits the cost</h2>
+<h2>How the law splits the cost between landlord and tenant</h2>
 <p>The CO₂ Cost Allocation Act shares the cost according to the state of the building: the more CO₂ a flat produces per square metre, the more the landlord pays (${h.src('co2kostaufg', 'CO2KostAufG')}). The idea is that tenants control how they heat, landlords control insulation and the heating system.</p>
 ${h.table(['kg CO₂ per m² a year', 'Tenant', 'Landlord'], st.map((s, i) => [
   i === 0 ? `below ${h.num(st[1].ab)}` : i === st.length - 1 ? `${h.num(s.ab)} or more` : `${h.num(s.ab)} to under ${h.num(st[i + 1].ab)}`,

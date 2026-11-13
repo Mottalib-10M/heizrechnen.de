@@ -70,7 +70,7 @@ ${h.table(['Anlass', 'Pflicht', 'Paragraf'], [
 <h2>Pflichten, die mit dem Haus kommen</h2>
 <p>Wer ein Ein- oder Zweifamilienhaus kauft, muss binnen zwei Jahren die oberste Geschossdecke dämmen, wenn sie den Mindestwärmeschutz nicht erfüllt (§ 35), und zugängliche, ungedämmte Heizungs- und Warmwasserleitungen in unbeheizten Räumen (§ 69). Werden Fenster, Dach oder Fassade erneuert, gelten für die neuen Bauteile die Höchstwerte der Anlage 7, sofern mehr als 10 Prozent der jeweiligen Fläche betroffen sind (§ 36). In Häusern ab sechs Wohnungen kommen die Prüfung und Optimierung älterer Heizungen nach § 60b und der hydraulische Abgleich nach § 60c hinzu. Für kleinere Häuser fördert das BAFA die Optimierung freiwillig (${h.a('heizungsoptimierung', 'Heizungsoptimierung')}). Was für eine alte Ölheizung beim Kauf gilt, steht unter ${h.a('oelheizung-verbot', 'Ölheizung Verbot')}.</p>
 
-<h2>Was aus dem GEG 2024 nicht mehr gilt</h2>
+<h2>Was aus dem Gebäudeenergiegesetz 2024 nicht mehr gilt</h2>
 <p>Ratgeber, die vor August 2026 geschrieben wurden, nennen oft Pflichten, die es nicht mehr gibt: die ${h.pct(G.alt_65_prozent)}-Regel für neue Heizungen, Fristen, die an die kommunale Wärmeplanung gekoppelt waren, die Beratungspflicht vor dem Einbau einer fossilen Heizung und das Betriebsverbot für Kessel nach ${h.num(G.alt_kessel_jahre)} Jahren. Sie standen in der ${h.src('geg2023', 'Fassung von 2024')} und galten bis zum 28. Juli 2026. Für die Wahl einer neuen Heizung zählt heute allein § 42 mit seinen zehn Optionen. Die laufenden Heizkosten Ihres Hauses berechnet der ${h.a('heizkosten-rechner', 'Heizkostenrechner')}.</p>`,
   },
   en: {
@@ -112,7 +112,7 @@ ${h.table(['Occasion', 'Duty', 'Section'], [
 <h2>Duties that come with the house</h2>
 <p>If you buy a one or two-family house, you have two years to insulate the top floor ceiling if it falls short of minimum thermal protection (section 35), and accessible, uninsulated heating and hot water pipes in unheated rooms (section 69). When windows, roof or facade are renewed, the new parts must meet the limits in annex 7, as long as more than 10 per cent of the relevant area is affected (section 36). Buildings with six or more homes add the check and optimisation of older heating under section 60b and hydraulic balancing under section 60c. For smaller houses BAFA funds optimisation on a voluntary basis (${h.a('heizungsoptimierung', 'heating optimisation')}). What applies to an old oil boiler when you buy is under ${h.a('oelheizung-verbot', 'oil heating ban')}.</p>
 
-<h2>What no longer applies from the 2024 version</h2>
+<h2>What no longer applies from the 2024 Building Energy Act</h2>
 <p>Guides written before August 2026 often list duties that no longer exist: the ${h.pct(G.alt_65_prozent)} rule for new heating, deadlines tied to municipal heat planning, mandatory advice before fitting fossil heating and the operating ban on boilers after ${h.num(G.alt_kessel_jahre)} years. They were in the ${h.src('geg2023', '2024 version')} and applied until 28 July 2026. The ${h.a('heizkosten-rechner', 'heating cost calculator')} works out the running costs of your house.</p>`,
   },
 });
