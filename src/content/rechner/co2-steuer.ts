@@ -44,7 +44,7 @@ export default defineGuide({
   order: 104,
   tool: 'co2',
   related: ['co2-preis-2027', 'co2-preis-heizoel', 'co2-kostenaufteilung', 'heizkosten-rechner', 'gaspreis', 'waermepumpe-foerderung'],
-  sources: ['behg10', 'dehst', 'ebev', 'co2kostaufg', 'btBehg'],
+  sources: ['behg10', 'dehst', 'ebev', 'co2kostaufg', 'btBehg', 'brBehg'],
   de: {
     slug: 'co2-steuer-heizung',
     nav: 'CO₂-Steuer',
@@ -69,7 +69,7 @@ ${h.table(['Jahr', 'Preis je Tonne', `Öl ${h.num(oelL)} l`, `Gas ${h.num(gasK)}
   kostenText(j, 'oel', oelL, h, 'bis'),
   kostenText(j, 'gas', gasK, h, 'bis'),
 ]), 'CO₂-Kosten mit Mehrwertsteuer bei gleichem Verbrauch', ['l', 'r', 'r', 'r'])}
-<p>Die Zeile für 2027 zeigt den Korridor, den der Bundestag am ${h.date(k27.bundestag)} beschlossen hat (${h.src('btBehg', 'Bundestag')}). Bundesrat und Verkündung stehen aus. Was bis dahin gilt und was ab 2028 mit dem ETS2 kommt, steht unter ${h.a('co2-preis-2027', 'CO₂-Preis 2027')}.</p>
+<p>Die Zeile für 2027 zeigt den Korridor, den der Bundestag am ${h.date(k27.bundestag)} beschlossen hat (${h.src('btBehg', 'Bundestag')}). Der Bundesrat hat am ${h.date(k27.bundesrat)} darauf verzichtet, den Vermittlungsausschuss anzurufen (${h.src('brBehg', 'BR-Drs. 624/26')}); es fehlen noch Ausfertigung und Verkündung. Was bis dahin gilt und was ab 2028 mit dem ETS2 kommt, steht unter ${h.a('co2-preis-2027', 'CO₂-Preis 2027')}.</p>
 
 <h2>So rechnet der Rechner</h2>
 <p>Die Menge CO₂ ergibt sich aus den Standardwerten der ${h.src('ebev', 'EBeV 2030')}: für einen Liter Heizöl ${h.num(C.oel_dichte_t_je_1000l, 3)} kg Gewicht, ${h.num(C.oel_hu_gj_je_t, 1)} MJ je kg und ${h.num(C.oel_ef_t_je_gj, 3)} kg CO₂ je MJ. Beim Gas gehen wir von den Kilowattstunden der Rechnung aus, die auf den Brennwert bezogen sind, und rechnen mit ${h.num(C.gas_gj_je_mwh, 4)} GJ je MWh auf den Heizwert um. Diese Umrechnung ist unsere eigene Ableitung, der Verordnungstext nennt sie nicht ausdrücklich. Das Ergebnis in Tonnen mal Preis ergibt die Kosten, darauf kommen ${h.pct(C.mwst)} Mehrwertsteuer.</p>
@@ -106,7 +106,7 @@ ${h.table(['Year', 'Price per tonne', `Oil ${h.num(oelL)} l`, `Gas ${h.num(gasK)
   kostenText(j, 'oel', oelL, h, 'to'),
   kostenText(j, 'gas', gasK, h, 'to'),
 ]), 'CO₂ cost including VAT for the same consumption', ['l', 'r', 'r', 'r'])}
-<p>The 2027 row shows the corridor the Bundestag passed on ${h.date(k27.bundestag)} (${h.src('btBehg', 'Bundestag')}). The Bundesrat and publication are still pending. What applies until then, and what the ETS2 brings from 2028, is under ${h.a('co2-preis-2027', 'CO₂ price 2027')}.</p>
+<p>The 2027 row shows the corridor the Bundestag passed on ${h.date(k27.bundestag)} (${h.src('btBehg', 'Bundestag')}). On ${h.date(k27.bundesrat)} the Bundesrat chose not to call the mediation committee (${h.src('brBehg', 'Bundesrat paper 624/26')}); signature and publication are still pending. What applies until then, and what the ETS2 brings from 2028, is under ${h.a('co2-preis-2027', 'CO₂ price 2027')}.</p>
 
 <h2>How the calculator works it out</h2>
 <p>The amount of CO₂ comes from the default values in the ${h.src('ebev', 'EBeV 2030 regulation')}: one litre of heating oil weighs ${h.num(C.oel_dichte_t_je_1000l, 3)} kg, holds ${h.num(C.oel_hu_gj_je_t, 1)} MJ per kg and emits ${h.num(C.oel_ef_t_je_gj, 3)} kg of CO₂ per MJ. For gas we start from the kWh on your bill, which German suppliers state on a gross calorific basis, and convert with ${h.num(C.gas_gj_je_mwh, 4)} GJ per MWh. That conversion is our own reading; the regulation does not spell it out. Tonnes times price gives the cost, and ${h.pct(C.mwst)} VAT is added.</p>

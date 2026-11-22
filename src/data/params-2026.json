@@ -272,6 +272,13 @@
         "en": "German Bundestag, 15 October 2026: amendment to the Fuel Emissions Trading Act passed"
       }
     },
+    "brBehg": {
+      "url": "https://dserver.bundestag.de/brd/2026/0624-26B.pdf",
+      "label": {
+        "de": "Bundesrat, Drucksache 624/26 (Beschluss) vom 20.11.2026: kein Vermittlungsausschuss zum Dritten Gesetz zur Änderung des BEHG",
+        "en": "Bundesrat, printed paper 624/26 (decision) of 20 November 2026: no mediation committee on the third BEHG amendment"
+      }
+    },
     "btDrs7869": {
       "url": "https://dserver.bundestag.de/btd/21/078/2107869.pdf",
       "label": {
@@ -412,11 +419,12 @@
       "min": 55,
       "max": 65,
       "bundestag": "2026-10-15",
+      "bundesrat": "2026-11-20",
       "ja": 303,
       "nein": 210,
       "enthaltung": 52,
       "drucksache": "21/7869",
-      "_statut": "vom Bundestag beschlossen, Bundesrat (zweiter Durchgang) und Verkündung im BGBl. ausstehend: kein geltendes Recht"
+      "_statut": "vom Bundestag beschlossen; Bundesrat 1070. Sitzung 20.11.2026: kein Antrag nach Art. 77 Abs. 2 GG (BR-Drs. 624/26 Beschluss, gelesen 2026-11-22). Ausfertigung und Verkündung im BGBl. ausstehend: noch kein geltendes Recht"
     },
     "ets2_start": 2028,
     "ets2_verordnung": "(EU) 2026/667",
