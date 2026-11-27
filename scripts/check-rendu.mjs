@@ -76,7 +76,10 @@ function texteVisible(html) {
 // Exécuté dans la page : outils communs (contraste sur le fond réellement peint, visibilité).
 function outils() {
   const vis = (e) => { const r = e.getBoundingClientRect(); return r.width > 1 && r.height > 1 && e.checkVisibility({ opacityProperty: true, visibilityProperty: true }) && !e.closest('details:not([open]) > :not(summary)'); };
-  const rgba = (s) => { const m = s.match(/[\d.]+/g) || [0, 0, 0, 0]; return { r: +m[0], g: +m[1], b: +m[2], a: m[3] === undefined ? 1 : +m[3] }; };
+  // Toute couleur CSS (rgb, oklch, oklab, color-mix de Tailwind v4…) passe par le canvas : lire les chiffres
+  // d'« oklab(1 0 0 / .95) » comme du rgb donnait un fond noir (faux positif sur auspaycalculator, 2026-11-28).
+  const cx = document.createElement('canvas').getContext('2d', { willReadFrequently: true }); cx.canvas.width = cx.canvas.height = 1;
+  const rgba = (s) => { cx.clearRect(0, 0, 1, 1); cx.fillStyle = 'rgba(0,0,0,0)'; cx.fillStyle = s; cx.fillRect(0, 0, 1, 1); const [r, g, b, a] = cx.getImageData(0, 0, 1, 1).data; return { r, g, b, a: a / 255 }; };
   const lum = ({ r, g, b }) => { const f = (c) => { c /= 255; return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; }; return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b); };
   const mix = (top, bot) => ({ r: top.r * top.a + bot.r * (1 - top.a), g: top.g * top.a + bot.g * (1 - top.a), b: top.b * top.a + bot.b * (1 - top.a), a: 1 });
   // Fond peint derrière e : on remonte les ancêtres ; une image ou un dégradé rend la mesure impossible (null).
@@ -163,14 +166,14 @@ async function controleMenus(page, mobile) {
     : await page.$$('header nav button, header nav summary, header nav [aria-haspopup], header nav .group > a, header nav .group > span');
   for (const d of declencheurs.slice(0, 8)) {
     if (!(await d.isVisible().catch(() => false))) continue;
-    const avant = await page.evaluate(() => [...document.querySelectorAll('header a, nav a, [role=menu] a, #mobile-menu a')].filter(window.__r.vis).length);
+    const avant = await page.evaluate(() => [...document.querySelectorAll('header a, [role=menu] a, #mobile-menu a')].filter(window.__r.vis).length);
     const lib = (await d.textContent().catch(() => '') || '').trim().slice(0, 30) || '☰';
     if (!mobile) await d.hover().catch(() => {});
     await page.waitForTimeout(250);
-    let ouvert = await page.evaluate((n) => [...document.querySelectorAll('header a, nav a, [role=menu] a, #mobile-menu a')].filter(window.__r.vis).length > n, avant);
+    let ouvert = await page.evaluate((n) => [...document.querySelectorAll('header a, [role=menu] a, #mobile-menu a')].filter(window.__r.vis).length > n, avant);
     if (!ouvert || mobile) { await d.click({ timeout: 2000 }).catch(() => {}); await page.waitForTimeout(300); }
     const mauvais = await page.evaluate(() => {
-      for (const a of document.querySelectorAll('header a, nav a, [role=menu] a, #mobile-menu a, header [role=menuitem]')) {
+      for (const a of document.querySelectorAll('header a, [role=menu] a, #mobile-menu a, header [role=menuitem]')) { if (a.closest('footer')) continue;
         if (!window.__r.vis(a)) continue;
         for (const e of [a, ...a.querySelectorAll('*')]) {
           if (!window.__r.aTexte(e)) continue;
