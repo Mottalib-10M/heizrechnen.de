@@ -104,5 +104,5 @@ export function Hinweis({ lang, methodHref }: { lang: L; methodHref?: string }) 
 }
 
 export const kasten = 'mt-6 rounded-xl border border-accent-200 bg-accent-50/50 p-4 sm:p-5 lg:mt-0 lg:sticky lg:top-20';
-export const rahmen = 'rechner not-prose overflow-hidden rounded-xl border border-navy-200 bg-white';
+export const rahmen = 'rechner not-prose overflow-clip rounded-xl border border-navy-200 bg-white';
 export const raster = 'p-4 sm:p-6 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,25rem)] lg:items-start lg:gap-6';

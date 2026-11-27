@@ -110,26 +110,26 @@ export default function FoerderRechner({ lang = 'de', methodHref, preset = {} }:
     <div className={rahmen} data-chrome>
       <div className="srg h-1.5" aria-hidden="true" />
       <div className={raster}>
-        <form onSubmit={(e) => e.preventDefault()} className="space-y-5">
-          <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+        <form onSubmit={(e) => e.preventDefault()} className="space-y-5 lg:sticky lg:top-20">
+          <div className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
             <DateField id="fo-d" label={tx(lang, 'Datum des Antrags', 'Application date')} value={antrag} onChange={setAntrag} min={ANTRAG_MIN} max={F.richtlinie_ende} />
             <SelectField id="fo-a" label={tx(lang, 'Heizung heute', 'Current heating')} value={alt} onChange={setAlt} options={altOpt(lang)} />
           </div>
-          <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+          <div className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
             <NumberField id="fo-k" label={tx(lang, 'Kosten der neuen Heizung', 'Cost of the new system')} value={kosten} onChange={setKosten} unit="€" max={500000} lang={lang} help={tx(lang, 'brutto, mit Einbau', 'gross, installed')} />
             <NumberField id="fo-z" label={tx(lang, 'Zu versteuerndes Einkommen', 'Taxable household income')} value={zve} onChange={setZve} unit="€" max={1000000} lang={lang} help={tx(lang, 'Haushalt, Schnitt aus zwei Steuerbescheiden', 'household, average of two tax assessments')} />
           </div>
-          <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+          <div className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
             <SelectField id="fo-c" label={tx(lang, 'Kind unter 18 im Haushalt', 'Child under 18 at home')} value={kind} onChange={setKind} options={janein(lang)} />
             <SelectField id="fo-l" label={tx(lang, 'Bundesland', 'Federal state')} value={land} onChange={setLand} options={landOpt(lang)} />
           </div>
-          <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+          <div className="grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
             <NumberField id="fo-m" label={tx(lang, 'Wohnfläche', 'Living space')} value={flaeche} onChange={setFlaeche} unit="m²" max={2000} lang={lang} />
             <SelectField id="fo-e" label={tx(lang, 'Effizienzklasse (Energieausweis)', 'Efficiency class (energy certificate)')} value={klasse} onChange={setKlasse} options={klasseOpt(lang)} />
           </div>
           <details className="rounded-lg border border-navy-200 p-3">
             <summary className="cursor-pointer text-sm font-medium text-navy-800">{tx(lang, 'Weitere Angaben: Gebäude, Heizung, Preise', 'More options: building, system, prices')}</summary>
-            <div className="mt-3 grid grid-cols-2 gap-x-4 gap-y-4">
+            <div className="mt-3 grid grid-cols-1 gap-x-4 gap-y-4 sm:grid-cols-2">
               <SelectField id="fo-n" label={tx(lang, 'Neue Heizung', 'New system')} value={neu} onChange={setNeu} options={neuOpt(lang)} />
               <SelectField id="fo-g" label={tx(lang, 'Gebäude', 'Building')} value={geb} onChange={setGeb} options={gebOpt(lang)} />
               {gebaeude !== 'efh' && <NumberField id="fo-we" label={tx(lang, 'Wohneinheiten im Haus', 'Homes in the building')} value={einheiten} onChange={setWe} max={200} lang={lang} plain />}
