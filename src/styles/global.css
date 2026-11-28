@@ -70,7 +70,7 @@ h1 { font-weight: 700; } h2 { font-weight: 650; } h3 { font-weight: 600; }
   .clamp-more { display: inline-block; cursor: pointer; margin-top: 0.25rem; font-size: 0.875rem; font-weight: 600; color: var(--color-accent-800); text-decoration: underline; text-underline-offset: 3px; }
   .clamp-toggle:focus-visible ~ .clamp-more { outline: 2px solid var(--color-accent-800); outline-offset: 3px; }
   /* Filet aux couleurs du drapeau (RECETTE §19.1), en tête des calculateurs. */
-  .srg { background: linear-gradient(to right, #000 0 33.3%, #DD0000 33.3% 66.6%, #FFCE00 66.6% 100%); }
+  .srg { background: linear-gradient(to right, #000 0 33.3%, #DD0000 33.3% 66.6%, #FFCE00 66.6% 100%); border-radius: calc(.75rem - 1px) calc(.75rem - 1px) 0 0; }
   .rechenweg li { margin: .35rem 0; }
   /* Frise « Warten kostet » : barre du Zuschuss par date de dépôt. */
   .frist-bar { background: var(--color-navy-100); }
@@ -82,3 +82,8 @@ h1 { font-weight: 700; } h2 { font-weight: 650; } h3 { font-weight: 600; }
 :where(form, div, fieldset):has(> .grid-rows-subgrid) { align-content: start; }
 /* Dans une grille, le cadre du formulaire s'arrête sous ses champs au lieu de s'étirer à la hauteur du résultat. */
 .grid > form:has(> .grid-rows-subgrid) { align-self: start; }
+/* Indice « Seitlich wischen → » (règle du 2026-11-28) : affiché seulement quand le tableau qui suit déborde vraiment (.tableau-defile, posée par le script de BaseLayout). */
+.indice-defile { display: none; margin: 0 0 .25rem; text-align: right; font-size: .8125rem; font-weight: 500; color: var(--color-navy-600); }
+.indice-defile:has(+ .tableau-defile) { display: block; }
+/* En-têtes de tableau sur mobile (règle du 2026-11-28) : une seule ligne, le tableau défile avec l'indice, au lieu de petites capitales empilées sur 3 ou 4 lignes. */
+@media (max-width: 639px) { main thead th { white-space: nowrap; } }

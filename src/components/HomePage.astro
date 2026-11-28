@@ -124,12 +124,12 @@ const C = P.co2;
   <section class="mt-10 border-t border-navy-200 pt-6" aria-labelledby="laender" data-chrome>
     <h2 id="laender" class="text-2xl font-bold text-navy-900">{de ? 'Heizkosten im Jahr, Land für Land' : 'Heating cost a year, state by state'}</h2>
     <p class="mt-2 text-navy-700">{de ? '140 m², Effizienzklasse E, Gradtagzahl des Deutschen Wetterdienstes 2021 bis 2025, Preise 2026.' : '140 m², efficiency class E, German Weather Service degree days 2021 to 2025, 2026 prices.'}</p>
-    <div class="mt-4 overflow-x-auto">
+    <div class="mt-4"><p data-indice-defilement class="indice-defile">{de ? 'Seitlich wischen →' : 'Swipe sideways →'}</p><div class="overflow-x-auto">
       <table class="journal w-full text-sm">
         <thead><tr><th scope="col" class="px-2 py-2 text-left">{de ? 'Land' : 'State'}</th><th scope="col" class="px-2 py-2 text-right">{de ? 'Gradtage' : 'Degree days'}</th><th scope="col" class="px-2 py-2 text-right">{de ? 'Wärmepumpe' : 'Heat pump'}</th><th scope="col" class="px-2 py-2 text-right">Gas</th><th scope="col" class="px-2 py-2 text-right">{de ? 'Heizöl' : 'Oil'}</th></tr></thead>
         <tbody>{laender.map((l) => <tr class="border-b border-navy-100"><th scope="row" class="px-2 py-1.5 text-left font-normal text-navy-900">{l.land}</th><td class="tabular-nums px-2 py-1.5 text-right">{h.num(l.gt)}</td><td class="tabular-nums px-2 py-1.5 text-right font-semibold">{$(l.wp)}</td><td class="tabular-nums px-2 py-1.5 text-right">{$(l.gas)}</td><td class="tabular-nums px-2 py-1.5 text-right">{$(l.oel)}</td></tr>)}</tbody>
       </table>
-    </div>
+    </div></div>
     {r('heizkosten-bundesland') && <a class="mt-3 inline-block text-sm font-medium text-accent-800 underline" href={r('heizkosten-bundesland')}>{de ? 'Wie das Klima die Rechnung verändert' : 'How the climate changes the bill'}</a>}
   </section>
   <aside class="mt-10 rounded-lg border border-navy-200 bg-navy-50 p-4" aria-labelledby="veraltet" data-chrome>

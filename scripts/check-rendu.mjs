@@ -66,7 +66,7 @@ async function sitemapUrls(b) {
 }
 
 // 1. Mots internes : texte visible du HTML servi, scripts et styles retirés.
-const INTERNE = /mieux que (le|les) (premier|1er)s? résultats?|premier résultat (de |sur )?Google|(better than|beats) the (first|top) (Google )?(result|hit)|first (result|hit) (on|in) Google|erste[nr]? Treffer bei Google|besser als (der|die) erste|primer resultado (de|en) Google|primo risultato (di|su) Google|lorem ipsum/i;
+const INTERNE = /mieux que (le|les) (premier|1er)s? résultats?|premier résultat (de |sur )?Google|(better than|beats|outdoes) the (first|top) (Google |search )?(results?|hits?)|mejor que el primer resultado|meglio del primo risultato|first (result|hit) (on|in) Google|erste[nr]? Treffer bei Google|besser als (der|die) erste|primer resultado (de|en) Google|primo risultato (di|su) Google|lorem ipsum/i;
 const INTERNE_CASSE = /\bSERP\b|\bTODO\b|\bFIXME\b|\[object Object\]|\bNaN\b|\bundefined\b/; // casse exacte : « todo » est de l'espagnol
 function texteVisible(html) {
   return html.replace(/<(script|style|noscript|template)[\s\S]*?<\/\1>/gi, ' ').replace(/<!--[\s\S]*?-->/g, ' ')
@@ -87,7 +87,7 @@ function outils() {
     const couches = [];
     for (let x = e; x; x = x.parentElement) {
       const cs = getComputedStyle(x);
-      if (cs.backgroundImage !== 'none') return null;
+      if (cs.backgroundImage !== 'none' || cs.borderImageSource !== 'none') return null; // bandeau peint en border-image (24 sites) : non mesurable
       const c = rgba(cs.backgroundColor); if (c.a > 0) { couches.push(c); if (c.a >= 0.99) break; }
     }
     let f = { r: 255, g: 255, b: 255, a: 1 };
@@ -101,7 +101,8 @@ function outils() {
   };
   const aTexte = (e) => [...e.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim());
   const nom = (e) => (e.textContent || e.getAttribute('aria-label') || '').trim().replace(/\s+/g, ' ').slice(0, 40);
-  window.__r = { vis, contraste, aTexte, nom };
+  const sombre = (e) => { const b = fond(e); return b ? lum(b) < 0.25 : null; };
+  window.__r = { vis, contraste, aTexte, nom, sombre };
 }
 
 function controlePage(large) {
@@ -135,12 +136,26 @@ function controlePage(large) {
       const t0 = Math.round(cols[0].getBoundingClientRect().top);
       const rangee = cols.filter((k) => Math.abs(k.getBoundingClientRect().top - t0) < 12); if (rangee.length < 2) continue;
       const fin = (k) => { let m = k.getBoundingClientRect().top; for (const d of k.querySelectorAll('*')) { if (!vis(d)) continue; const r = d.getBoundingClientRect(); if (r.height < k.getBoundingClientRect().height - 2) m = Math.max(m, r.bottom); } return m; };
-      const collant = (k) => [k, ...k.querySelectorAll('*')].some((d) => getComputedStyle(d).position === 'sticky');
+      // Collant pour de vrai : un ancêtre en overflow hidden/auto/scroll (avant la page) empêche sticky de coller (netindependant, 2026-11-28).
+      const colle = (d) => { if (getComputedStyle(d).position !== 'sticky') return false; for (let x = d.parentElement; x && x !== document.body; x = x.parentElement) { if (/(hidden|auto|scroll|clip)/.test(getComputedStyle(x).overflowY + getComputedStyle(x).overflowX)) return false; } return true; };
+      const collant = (k) => [k, ...k.querySelectorAll('*')].some(colle);
       const fins = rangee.map(fin); const max = Math.max(...fins);
       const i = fins.findIndex((f, j) => max - f >= 250 && !collant(rangee[j]));
       if (i >= 0) { pb.push(`grand vide de ${Math.round(max - fins[i])} px sous une colonne du simulateur (l'autre colonne est bien plus haute)`); break; }
     }
   }
+  // 8. Bandeau : H1 sur fond sombre ? (comparé à l'accueil côté Node) ; fil d'Ariane posé hors du bandeau (ruban clair)
+  const h1 = [...document.querySelectorAll('h1')].find(vis);
+  const h1Sombre = h1 ? window.__r.sombre(h1) : null;
+  const fil = [...document.querySelectorAll('nav[aria-label*="riane" i], nav[aria-label*="readcrumb" i], [class*="breadcrumb" i]')].find(vis);
+  if (h1 && fil && h1Sombre === true && window.__r.sombre(fil) === false && fil.getBoundingClientRect().bottom <= h1.getBoundingClientRect().top + 2)
+    pb.push('fil d\'Ariane hors du bandeau : ruban clair entre l\'en-tête et le bandeau du titre');
+  // 9. Couture : deux blocs du bandeau peints jusqu'aux bords (box-shadow d'étalement) collés l'un sous l'autre
+  { const etales = [...document.querySelectorAll('body *')].filter((e) => { const cs = getComputedStyle(e); if (cs.boxShadow === 'none' || !vis(e)) return false; const m = cs.boxShadow.match(/(-?\d+(?:\.\d+)?)px\s+(-?\d+(?:\.\d+)?)px\s+(-?\d+(?:\.\d+)?)px\s+(\d+(?:\.\d+)?)px/); return m && +m[4] >= 100 && window.__r.sombre(e) === true; });
+    for (const a of etales) for (const b of etales) { if (a === b || a.contains(b) || b.contains(a)) continue; const ra = a.getBoundingClientRect(), rb = b.getBoundingClientRect();
+      if (Math.abs(ra.bottom - rb.top) <= 2 && Math.abs(ra.left - rb.left) < 4) { pb.push('couture dans le bandeau : deux blocs peints jusqu\'aux bords collés l\'un sous l\'autre (un seul conteneur pour tout le bandeau)'); break; } } }
+  // 10. Tableau coupé sur mobile sans indice de défilement
+  if (!large) for (const t of document.querySelectorAll('table')) { if (!vis(t)) continue; const c = t.parentElement; if (t.scrollWidth > c.clientWidth + 8 && /(auto|scroll)/.test(getComputedStyle(c).overflowX) && !c.closest('[data-indice-defilement]') && !c.parentElement.querySelector('[data-indice-defilement]')) { pb.push('tableau plus large que l\'écran sans indice de défilement (« → faites glisser ») : ' + nom(t.querySelector('th,td') || t)); break; } }
   // 7. Choix ou valeur coupés
   const cv = document.createElement('canvas').getContext('2d');
   for (const s of document.querySelectorAll('select')) {
@@ -155,7 +170,7 @@ function controlePage(large) {
     if (!vis(i) || !(i.value || '').trim()) continue;
     if (i.scrollWidth > i.clientWidth + 1) { pb.push(`valeur coupée dans un champ : « ${i.value.slice(0, 20)} »`); break; }
   }
-  return pb;
+  return { pb, h1Sombre };
 }
 
 // 2. Menus ouverts : chaque déclencheur de l'en-tête, survolé puis cliqué ; les liens apparus doivent être lisibles.
@@ -183,6 +198,14 @@ async function controleMenus(page, mobile) {
       return null;
     });
     if (mauvais) { pb.push(`menu « ${lib} » ouvert illisible : ${mauvais}`); break; }
+    const souci = await d.evaluate((el) => {
+      for (const e of [el, ...el.querySelectorAll('*')]) if (window.__r.vis(e) && window.__r.aTexte(e)) { const c = window.__r.contraste(e); if (c < 3) return `bouton du menu ouvert illisible (contraste ${c.toFixed(1)})`; }
+      const liens = [...document.querySelectorAll('header a, [role=menu] a, #mobile-menu a')].filter(window.__r.vis);
+      const bas = liens.filter((a) => a.getBoundingClientRect().bottom > Math.min(innerHeight, 720) + 2); // un portable affiche ≈ 720 px sous les barres du navigateur
+      if (bas.length) { let x = bas[0].parentElement, defile = false; for (; x && x !== document.body; x = x.parentElement) { const o = getComputedStyle(x).overflowY; if ((o === 'auto' || o === 'scroll') && x.scrollHeight > x.clientHeight) { defile = true; break; } } if (!defile) return `menu plus haut que 720 px (écran de portable) : ${bas.length} lien(s) hors de vue (« ${window.__r.nom(bas[0])} »), ni défilement ni colonnes`; }
+      return null;
+    });
+    if (souci) { pb.push(`menu « ${lib} » : ${souci}`); break; }
     await page.keyboard.press('Escape').catch(() => {}); await page.mouse.move(5, 600); await page.waitForTimeout(150);
     if (mobile) break;
   }
@@ -212,6 +235,7 @@ for (const u of toutes) {
   if (choix.length >= NB + 1) break;
 }
 const browser = await chromium.launch();
+const accueilSombre = {};
 for (const [w, h] of [[390, 844], [1280, 900], [1440, 900], [1920, 1080]]) {
   const ctx = await browser.newContext({ viewport: { width: w, height: h }, isMobile: w < 500, colorScheme: 'light' });
   const page = await ctx.newPage();
@@ -220,7 +244,9 @@ for (const [w, h] of [[390, 844], [1280, 900], [1440, 900], [1920, 1080]]) {
       await page.goto(u, { waitUntil: 'networkidle', timeout: 30000 });
       await page.waitForTimeout(500);
       await page.evaluate(outils);
-      const pb = await page.evaluate(controlePage, w >= 1280);
+      const { pb, h1Sombre } = await page.evaluate(controlePage, w >= 1280);
+      if (n === 0) accueilSombre[w] = h1Sombre;
+      else if (accueilSombre[w] === true && h1Sombre === false) pb.push('page intérieure sans le bandeau de l\'accueil : titre sur fond clair (la charte ne vise que l\'accueil)');
       if (n === 0 && (w === 390 || w === 1440)) pb.push(...await controleMenus(page, w === 390));
       for (const p of pb) fautes.push(`${u.replace(base, '') || '/'} à ${w} px : ${p}`);
     } catch (e) { fautes.push(`${u.replace(base, '') || '/'} à ${w} px : page non chargée (${String(e).slice(0, 80)})`); }
